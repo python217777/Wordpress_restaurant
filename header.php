@@ -262,28 +262,28 @@
           <div
             class="p-[3px] flex justify-center items-center h-[50px] mt-[10px]"
           >
-            <a href="<?php echo esc_url(home_url('/')); ?>notice" class="nav-button flex justify-center items-center">
+            <a href="<?php echo esc_url(home_url('/')); ?>menu" class="nav-button flex justify-center items-center">
               メニュー
             </a>
           </div>
           <div
             class="p-[3px] flex justify-center items-center h-[50px] mt-[10px]"
           >
-            <a href="<?php echo esc_url(home_url('/')); ?>notice" class="nav-button flex justify-center items-center">
+            <a href="<?php echo esc_url(home_url('/')); ?>infor" class="nav-button flex justify-center items-center">
               店舗情報
             </a>
           </div>
           <div
             class="p-[3px] flex justify-center items-center h-[50px] mt-[10px]"
           >
-            <a href="<?php echo esc_url(home_url('/')); ?>notice" class="nav-button flex justify-center items-center">
+            <a href="<?php echo esc_url(home_url('/')); ?>inside" class="nav-button flex justify-center items-center">
               店内案内
             </a>
           </div>
           <div
             class="p-[3px] flex justify-center items-center h-[50px] my-[10px]"
           >
-            <a href="<?php echo esc_url(home_url('/')); ?>notice" class="nav-button flex justify-center items-center">
+            <a href="<?php echo esc_url(home_url('/')); ?>contact" class="nav-button flex justify-center items-center">
               お問い合わせ
             </a>
           </div>
