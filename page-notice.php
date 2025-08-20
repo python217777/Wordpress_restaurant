@@ -5,8 +5,9 @@
 	*/
 
 	if ( ! defined( 'ABSPATH' ) ) exit;
-	get_header();
-
+  get_header();
+	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+	$blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_category_id') : "100";
 ?>
   <!--title-->
       <div
@@ -15,81 +16,67 @@
         お知らせ
       </div>
       <div class="w-[70vw] mx-auto" id="NoticeBoard">
-        <div
+        <!-- <div
           class="border-b w-full md:mb-[50px] mb-[40px]"
-        ></div>
-        <div class="w-full grid grid-cols-7">
-          <div
-            class="text-[15px] leading-[40px] max-md:col-span-2 max-[425px]:col-span-3"
-          >
-            2025.9.10
-          </div>
-          <div class="text-[13px] mt-[5px] max-md:col-span-2">
-            <div
-              class="py-[4px] px-[4px] w-fit border-smooth-gray border-[0.4px]"
-            >
-              お知らせ
-            </div>
-          </div>
-          <div class="hidden md:block md:col-span-5 text-[17px] leading-[40px]">
-            新規料理サービス開始
-          </div>
-        </div>
-        <div class="md:hidden text-[17px] leading-[40px] mt-[10px]">
-          新規料理サービス開始
-        </div>
-        <div
-          class="border-b w-full md:my-[50px] my-[40px]"
-        ></div>
-        <div class="w-full grid grid-cols-7">
-          <div
-            class="text-[15px] leading-[40px] max-md:col-span-2 max-[425px]:col-span-3"
-          >
-            2025.8.5
-          </div>
-          <div class="text-[13px] mt-[5px] max-md:col-span-2">
-            <div
-              class="py-[4px] px-[4px] w-fit border-smooth-gray border-[0.4px]"
-            >
-              お知らせ
-            </div>
-          </div>
-          <div class="hidden md:block md:col-span-5 text-[17px] leading-[40px]">
-            このたび、2025年8月5日にGrand Openさせていただくことになりました。
-            皆さまのお越しをお待ち申し上げております。
-          </div>
-        </div>
-        <div class="md:hidden text-[17px] leading-[40px] mt-[10px]">
-          このたび、2025年8月5日にGrand Openさせていただくことになりました。
-          皆さまのお越しをお待ち申し上げております。
-        </div>
-        <div
-          class="border-b w-full md:my-[50px] my-[40px]"
-        ></div>
+        >
+        </div> -->
+       
+			
 
-        <div class="w-full grid grid-cols-7">
-          <div
-            class="text-[15px] leading-[40px] max-md:col-span-2 max-[425px]:col-span-3"
-          >
-            2025.8.1
-          </div>
-          <div class="text-[13px] mt-[5px] max-md:col-span-2">
+       <?php
+          $args = [
+            'post_type' => 'blog',
+            'post_status' => 'publish',
+            'paged' => 1,
+            'posts_per_page' => 1,
+            'orderby' => 'post_date',
+            'order' => "DESC"
+          ];
+
+          if( !empty($blog_category_id) && ($blog_category_id != 100) ) {
+            $args['tax_query'] = [[
+              'taxonomy' => 'blog_category',
+              'field' => 'term_id',
+              'terms' => $blog_category_id
+            ]];
+          }
+          $custom_query = new WP_Query( $args );
+        ?>
+        <?php if( $custom_query->have_posts() ) : ?>
+					<?php while ( $custom_query->have_posts() ) : $custom_query->the_post();
+						$cat = get_the_terms(get_the_ID(), 'blog_category');
+						$title = mb_strimwidth(strip_tags($post->post_title), 0, 90, "…", "UTF-8");
+                        $text = mb_strimwidth(strip_tags($post->post_content), 0, 80, "…", "UTF-8");
+						$color = get_field('color', 'blog_category' . '_' . $cat[0]->term_id);
+					?>
+          <div class="w-full grid grid-cols-7">
             <div
-              class="py-[4px] px-[4px] w-fit border-smooth-gray border-[0.4px]"
+              class="text-[15px] leading-[40px] max-md:col-span-2 max-[425px]:col-span-3"
             >
-              お知らせ
+              <?php the_time("Y.m.d"); ?>
+            </div>
+            <div class="text-[13px] mt-[5px] max-md:col-span-2">
+              <div
+                class="py-[4px] px-[4px] w-fit border-smooth-gray border-[0.4px]"
+              >
+                <?php if( $cat ) : ?>
+                  <div class="label"><?php echo $cat[0]->name; ?></div>
+                <?php endif; ?>
+              </div>
+            </div>
+            <div class="hidden md:block md:col-span-5 text-[17px] leading-[40px]">
+              <?php echo $title; ?>
             </div>
           </div>
-          <div class="hidden md:block md:col-span-5 text-[17px] leading-[40px]">
-            新規料理サービス開始
-          </div>
-        </div>
-        <div class="md:hidden text-[17px] leading-[40px] mt-[10px]">
-          新規料理サービス開始
-        </div>
-        <div
-          class="border-b w-full md:mt-[50px] mt-[40px]"
-        ></div>
+					<?php endwhile; ?>
+			<?php wp_reset_postdata(); ?>
+			<?php endif; ?>
+        
+      <div class="wp-pagination works">
+				<?php if(function_exists('wp_pagenavi')) : ?>
+					<?php wp_pagenavi(array('query' => $custom_query)); ?>
+				<?php endif; ?>
+			</div>
 
         <div class="flex justify-center mt-[70px]" id="PageButton">
           <button
