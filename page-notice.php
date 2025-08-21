@@ -22,7 +22,7 @@
             'post_type' => 'blog',
             'post_status' => 'publish',
             'paged' => 1,
-            'posts_per_page' => 1,
+            'posts_per_page' => 10,
             'orderby' => 'post_date',
             'order' => "DESC"
           ];
@@ -40,7 +40,10 @@
 					<?php while ( $custom_query->have_posts() ) : $custom_query->the_post();
 						$cat = get_the_terms(get_the_ID(), 'blog_category');
 						$title = mb_strimwidth(strip_tags($post->post_title), 0, 90, "…", "UTF-8");
-            $text = mb_strimwidth(strip_tags($post->post_content), 0, 80, "…", "UTF-8");
+            // $text = mb_strimwidth(strip_tags($post->post_content), 0, 80, "…", "UTF-8");
+            // $text = $text = get_the_excerpt();
+            $text = apply_filters('the_content', $post->post_content);
+
 						$color = get_field('color', 'blog_category' . '_' . $cat[0]->term_id);
 					?>
           <div class="w-full grid grid-cols-7">
@@ -78,86 +81,72 @@
 				<?php endwhile; ?>
 			<?php wp_reset_postdata(); ?>
 			<?php endif; ?>
-        
-       
-        <?php
-          $count_posts = wp_count_posts('blog');
-          $total_posts = $count_posts->publish;
-          echo '<div class="text-center my-5">全' . $total_posts . '件のお知らせ</div>';
-          ?>
-          <?php
-          $total_posts   = $custom_query->found_posts;
-          $max_pages     = $custom_query->max_num_pages;
-          $current_page  = max(1, get_query_var('paged'));
-
-          if ($max_pages > 1) :
-          ?>
-            <div class="flex justify-center mt-[70px]" id="PageButton">
-              <!-- First -->
-              <?php if ($current_page > 1): ?>
-                <a href="<?php echo get_pagenum_link(1); ?>"
-                  class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300">&lt;&lt;</a>
-              <?php endif; ?>
-
-              <!-- Prev -->
-              <?php if ($current_page > 1): ?>
-                <a href="<?php echo get_pagenum_link($current_page - 1); ?>"
-                  class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300">&lt;</a>
-              <?php endif; ?>
-
-              <!-- Page Numbers -->
-              <?php for ($i = 1; $i <= $max_pages; $i++): ?>
-                <a href="<?php echo get_pagenum_link($i); ?>"
-                  class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px]
-                    <?php echo ($i == $current_page) ? 'bg-[#665B09] text-white hover:bg-[#665B09]/80' : 'hover:bg-[#665B09]/20'; ?> transition-colors duration-300">
-                  <?php echo $i; ?>
-                </a>
-              <?php endfor; ?>
-
-              <!-- Next -->
-              <?php if ($current_page < $max_pages): ?>
-                <a href="<?php echo get_pagenum_link($current_page + 1); ?>"
-                  class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300">&gt;</a>
-              <?php endif; ?>
-
-              <!-- Last -->
-              <?php if ($current_page < $max_pages): ?>
-                <a href="<?php echo get_pagenum_link($max_pages); ?>"
-                  class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300">&gt;&gt;</a>
-              <?php endif; ?>
-            </div>
-        <?php endif; ?>
-
-
-
+      <?php
+        $total_posts   = $custom_query->found_posts;
+        $max_pages     = $custom_query->max_num_pages;
+        $current_page  = max(1, get_query_var('paged'));
+      ?>
         <div class="flex justify-center mt-[70px]" id="PageButton">
-          <button
-            class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300"
-          >
-            &lt;&lt;
-          </button>
-          <button
-            class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300"
-          >
-            &lt;
-          </button>
-          <button
-            class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] bg-[#665B09] text-white hover:bg-[#665B09]/80 transition-colors duration-300"
-          >
-            1
-          </button>
-          <button
-            class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300"
-          >
-            &gt;
-          </button>
-          <button
-            class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300"
-          >
-            &gt;&gt;
-          </button>
+          <!-- First -->
+          <?php if ($current_page >= 1): ?>
+            <a href="<?php echo get_pagenum_link(1); ?>"
+              class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[3px] hover:bg-[#665B09]/20 transition-colors duration-300">&lt;&lt;</a>
+          <?php endif; ?>
+
+          <!-- Prev -->
+          <?php if ($current_page > 1): ?>
+            <a href="<?php echo get_pagenum_link($current_page - 1); ?>"
+              class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[3px] hover:bg-[#665B09]/20 transition-colors duration-300">&lt;</a>
+          <?php endif; ?>
+          <?php
+            if ($current_page <= 3){
+              $left_limit = 1; $right_limit=min(5,$max_pages);
+              $flag=1;
+            }
+            else if($current_page < $max_pages-2){
+              $left_limit = max(1,$current_page-2);
+              $right_limit=min($current_page+2,$max_pages);
+              $flag=2;
+            }
+            else{
+              $left_limit = max(1,$max_pages-4);
+              $right_limit=$max_pages;
+              $flag=3;
+            }
+          ?>
+          
+          <?php if($flag > 1 && $max_pages > 5):?>
+            <p class="w-[25px] h-[25px] flex justify-center items-center text-[10px] mx-[3px]">
+              ...    
+            </p>
+          <?php endif; ?>
+
+          <?php for ($i = $left_limit; $i <=  $right_limit; $i++): ?>
+            <a href="<?php echo get_pagenum_link($i); ?>"
+              class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[3px]
+                <?php echo ($i == $current_page) ? 'bg-[#665B09] text-white hover:bg-[#665B09]/80' : 'hover:bg-[#665B09]/20'; ?> transition-colors duration-300">
+              <?php echo $i; ?>
+            </a>
+          <?php endfor; ?>
+
+          <?php if($flag < 3 && $max_pages > 5):?>
+            <p class="w-[25px] h-[25px] flex justify-center items-center text-[10px] mx-[3px]">
+              ...    
+            </p>
+          <?php endif; ?>
+
+          <!-- Next -->
+          <?php if ($current_page < $max_pages): ?>
+            <a href="<?php echo get_pagenum_link($current_page + 1); ?>"
+              class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[3px] hover:bg-[#665B09]/20 transition-colors duration-300">&gt;</a>
+          <?php endif; ?>
+
+          <!-- Last -->
+          <?php if ($current_page <= $max_pages): ?>
+            <a href="<?php echo get_pagenum_link($max_pages); ?>"
+              class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[3px] hover:bg-[#665B09]/20 transition-colors duration-300">&gt;&gt;</a>
+          <?php endif; ?>
         </div>
-      </div>
-
-
+      
+    </div>
 	<?php get_footer(); ?>
