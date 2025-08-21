@@ -16,14 +16,8 @@
         お知らせ
       </div>
       <div class="w-[70vw] mx-auto" id="NoticeBoard">
-        <!-- <div
-          class="border-b w-full md:mb-[50px] mb-[40px]"
-        >
-        </div> -->
-       
-			
-
-       <?php
+        <div class="border-t w-full md:my-[50px] my-[40px]"></div>
+        <?php
           $args = [
             'post_type' => 'blog',
             'post_status' => 'publish',
@@ -46,7 +40,7 @@
 					<?php while ( $custom_query->have_posts() ) : $custom_query->the_post();
 						$cat = get_the_terms(get_the_ID(), 'blog_category');
 						$title = mb_strimwidth(strip_tags($post->post_title), 0, 90, "…", "UTF-8");
-                        $text = mb_strimwidth(strip_tags($post->post_content), 0, 80, "…", "UTF-8");
+            $text = mb_strimwidth(strip_tags($post->post_content), 0, 80, "…", "UTF-8");
 						$color = get_field('color', 'blog_category' . '_' . $cat[0]->term_id);
 					?>
           <div class="w-full grid grid-cols-7">
@@ -56,27 +50,85 @@
               <?php the_time("Y.m.d"); ?>
             </div>
             <div class="text-[13px] mt-[5px] max-md:col-span-2">
-              <div
-                class="py-[4px] px-[4px] w-fit border-smooth-gray border-[0.4px]"
-              >
-                <?php if( $cat ) : ?>
-                  <div class="label"><?php echo $cat[0]->name; ?></div>
-                <?php endif; ?>
-              </div>
+              <?php if( $cat ) : ?>
+                <div
+                  class="py-[4px] px-[4px] w-fit border-smooth-gray border-[0.4px]"
+                >
+                  <?php echo $cat[0]->name; ?>
+                </div>
+              <?php endif; ?>
             </div>
             <div class="hidden md:block md:col-span-5 text-[17px] leading-[40px]">
               <?php echo $title; ?>
+              <div class="hidden md:block text-[15px] leading-[30px] mt-[5px]">
+                <?php echo $text; ?>
+              </div>
+            </div>
+            <div class="md:hidden text-[17px] leading-[40px] mt-[10px]">
+              <?php echo $title; ?>
+              <div class="hidden md:block text-[15px] leading-[30px] mt-[5px]">
+                <?php echo $text; ?>
+              </div>
             </div>
           </div>
-					<?php endwhile; ?>
+          <div
+          class="border-t w-full md:my-[50px] my-[40px]"
+          >
+          </div>
+				<?php endwhile; ?>
 			<?php wp_reset_postdata(); ?>
 			<?php endif; ?>
         
-      <div class="wp-pagination works">
-				<?php if(function_exists('wp_pagenavi')) : ?>
-					<?php wp_pagenavi(array('query' => $custom_query)); ?>
-				<?php endif; ?>
-			</div>
+       
+        <?php
+          $count_posts = wp_count_posts('blog');
+          $total_posts = $count_posts->publish;
+          echo '<div class="text-center my-5">全' . $total_posts . '件のお知らせ</div>';
+          ?>
+          <?php
+          $total_posts   = $custom_query->found_posts;
+          $max_pages     = $custom_query->max_num_pages;
+          $current_page  = max(1, get_query_var('paged'));
+
+          if ($max_pages > 1) :
+          ?>
+            <div class="flex justify-center mt-[70px]" id="PageButton">
+              <!-- First -->
+              <?php if ($current_page > 1): ?>
+                <a href="<?php echo get_pagenum_link(1); ?>"
+                  class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300">&lt;&lt;</a>
+              <?php endif; ?>
+
+              <!-- Prev -->
+              <?php if ($current_page > 1): ?>
+                <a href="<?php echo get_pagenum_link($current_page - 1); ?>"
+                  class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300">&lt;</a>
+              <?php endif; ?>
+
+              <!-- Page Numbers -->
+              <?php for ($i = 1; $i <= $max_pages; $i++): ?>
+                <a href="<?php echo get_pagenum_link($i); ?>"
+                  class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px]
+                    <?php echo ($i == $current_page) ? 'bg-[#665B09] text-white hover:bg-[#665B09]/80' : 'hover:bg-[#665B09]/20'; ?> transition-colors duration-300">
+                  <?php echo $i; ?>
+                </a>
+              <?php endfor; ?>
+
+              <!-- Next -->
+              <?php if ($current_page < $max_pages): ?>
+                <a href="<?php echo get_pagenum_link($current_page + 1); ?>"
+                  class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300">&gt;</a>
+              <?php endif; ?>
+
+              <!-- Last -->
+              <?php if ($current_page < $max_pages): ?>
+                <a href="<?php echo get_pagenum_link($max_pages); ?>"
+                  class="w-[25px] h-[25px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[10px] mx-[7px] hover:bg-[#665B09]/20 transition-colors duration-300">&gt;&gt;</a>
+              <?php endif; ?>
+            </div>
+        <?php endif; ?>
+
+
 
         <div class="flex justify-center mt-[70px]" id="PageButton">
           <button
