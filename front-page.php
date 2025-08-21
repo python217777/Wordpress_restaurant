@@ -6,6 +6,8 @@
 
 	if ( ! defined( 'ABSPATH' ) ) exit;
 	get_header();
+  	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+	$blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_category_id') : "100";
 
 ?>
 
@@ -34,8 +36,6 @@
         <div></div>
       </div>
 
-      <!-- Hero Section -->
-
       <section class="lg:mt-[378px] relative mt-[204px] md:mt-[300px]">
         <div class="overflow-hidden flex justify-center">
           <img
@@ -44,20 +44,49 @@
             class="w-[225px] h-[371px] min-[450px]:w-[380px] min-[450px]:h-[500px] lg:h-[580px] lg:w-[470px] object-cover rounded-t-full"
           />
         </div>
+
         <div
           class="absolute top-0 mt-[200px] lg:mt-[301px] z-10 w-full grid grid-cols-2 hidden md:grid"
         >
           <div class="lg:ml-[10vw] md:ml-[6vw] xl:ml-[16.8vw]">
             <div class="text-[18px] leading-[28px]">お知らせ</div>
             <div class="text-[15px] leading-[40px]" id="hero_notice">
-              <div id="notice1">
-                <div id="hero_title1">2025.9.10</div>
-                <div id="hero_content1">新規料理サービス開始 ...</div>
-              </div>
-              <div id="notice2">
-                <div id="hero_title2">2025.8.5</div>
-                <div id="hero_content2">新規料理サービス開始 ...</div>
-              </div>
+            <?php
+              // --- current page (works for /page/2/ and ?paged=2 and static front page) ---
+              $current_page = max(1, get_query_var('paged') ? get_query_var('paged') : get_query_var('page'));
+
+              // --- build query ---
+              $args = [
+                'post_type'      => 'blog',
+                'post_status'    => 'publish',
+                'paged'          => $current_page, // FIXED: use the real current page
+                'posts_per_page' => 10,
+                'orderby'        => 'post_date',
+                'order'          => 'DESC',
+              ];
+
+              if ( ! empty( $blog_category_id ) && (int)$blog_category_id !== 100 ) {
+                $args['tax_query'] = [[
+                  'taxonomy' => 'blog_category',
+                  'field'    => 'term_id',
+                  'terms'    => (int)$blog_category_id,
+                ]];
+              }
+
+              $custom_query = new WP_Query($args);
+            ?>
+            <?php if ( $custom_query->have_posts() ) : ?>
+              <?php $count = 0 ?>
+              <?php while ( $custom_query->have_posts() ) : $custom_query->the_post();
+                $count++;
+                if($count >= 3)break;
+                $title = mb_strimwidth(strip_tags(get_the_title()), 0, 10, '…', 'UTF-8');
+              ?>
+                <div id="hero_title1"> <?php the_time('Y.m.d'); ?></div>
+                <div id="hero_content1"><?php echo esc_html($title); ?></div>
+              <?php endwhile; ?>
+              <?php wp_reset_postdata(); ?>
+              <?php endif; ?>
             </div>
             <a href="<?php echo esc_url(home_url('/')); ?>notice" class="text-[13px] leading-[25px]">
               <p class="nav-button h-[30px] w-[120px] flex items-center">
@@ -65,7 +94,7 @@
               </p>
             </a>
           </div>
-
+          
           <div
             class="right-0 text-right lg:mr-[10vw] md:mr-[6vw] xl:mr-[16.8vw]"
           >
@@ -86,14 +115,42 @@
             <div class="text-[18px] leading-[28px]">お知らせ</div>
             <div class="ml-4">
               <div class="text-[15px] leading-[40px]" id="hero_notice">
-                <div id="notice1">
-                  <div id="hero_title1">2025.9.10</div>
-                  <div id="hero_content1">新規料理サービス開始 ...</div>
-                </div>
-                <div id="notice2">
-                  <div id="hero_title2">2025.8.5</div>
-                  <div id="hero_content2">新規料理サービス開始 ...</div>
-                </div>
+                <?php
+                  // --- current page (works for /page/2/ and ?paged=2 and static front page) ---
+                  $current_page = max(1, get_query_var('paged') ? get_query_var('paged') : get_query_var('page'));
+
+                  // --- build query ---
+                  $args = [
+                    'post_type'      => 'blog',
+                    'post_status'    => 'publish',
+                    'paged'          => $current_page, // FIXED: use the real current page
+                    'posts_per_page' => 10,
+                    'orderby'        => 'post_date',
+                    'order'          => 'DESC',
+                  ];
+
+                  if ( ! empty( $blog_category_id ) && (int)$blog_category_id !== 100 ) {
+                    $args['tax_query'] = [[
+                      'taxonomy' => 'blog_category',
+                      'field'    => 'term_id',
+                      'terms'    => (int)$blog_category_id,
+                    ]];
+                  }
+
+                  $custom_query = new WP_Query($args);
+                ?>
+                <?php if ( $custom_query->have_posts() ) : ?>
+                  <?php $count = 0 ?>
+                  <?php while ( $custom_query->have_posts() ) : $custom_query->the_post();
+                    $count++;
+                    if($count >= 3)break;
+                    $title = mb_strimwidth(strip_tags(get_the_title()), 0, 10, '…', 'UTF-8');
+                  ?>
+                    <div id="hero_title1"> <?php the_time('Y.m.d'); ?></div>
+                    <div id="hero_content1"><?php echo esc_html($title); ?></div>
+                  <?php endwhile; ?>
+                  <?php wp_reset_postdata(); ?>
+                  <?php endif; ?>
               </div>
               <a href="<?php echo esc_url(home_url('/')); ?>notice" class="text-[13px] leading-[25px] mt-[8px]">
                 もっと見る →
