@@ -99,7 +99,7 @@
               </a>
             </div>
             <div>
-              <a href="https://toreta.in" class="footer-button">
+              <a href="https://toreta.in" target = "_blank" class="footer-button">
                 ご予約
               </a>
             </div> 
