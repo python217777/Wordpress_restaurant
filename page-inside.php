@@ -24,7 +24,7 @@
         class="mt-[60px] mx-[25vw] overflow-hidden aspect-[17/15] my-auto"
       >
         <img
-          src="<?php echo T_DIRE_URI; ?>/assets/TempImage/10.jpg"
+          src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店内案内.png"
           alt="foodimage1"
           class="w-full h-full object-cover"
         />
