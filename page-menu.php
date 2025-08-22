@@ -100,7 +100,7 @@
             class="md:hidden md:ml-[6vw] overflow-hidden aspect43 my-auto max-w-[548px] mx-auto"
           >
             <img
-              src="<?php echo T_DIRE_URI; ?>/assets/TempImage/5.jpg"
+              src="<?php echo T_DIRE_URI; ?>/assets/TempImage/グラタン-.jpg"
               alt="foodimage1"
               class="w-full h-full object-cover"
             />
@@ -124,11 +124,11 @@
             </div>
           </div>
           <div
-            class="hidden md:block md:mr-[6vw] overflow-hiddenaspect43 my-auto max-w-[548px] mx-auto"
+            class="hidden md:block md:mr-[6vw] overflow-hidden aspect43 my-auto max-w-[548px] mx-auto"
           >
           
             <img
-              src="<?php echo T_DIRE_URI; ?>/assets/TempImage/5.jpg"
+              src="<?php echo T_DIRE_URI; ?>/assets/TempImage/グラタン-.jpg"
               alt="foodimage1"
               class="w-full h-full object-cover"
             />
@@ -142,7 +142,7 @@
         <div class="w-[65vw] mx-auto md:w-full md:grid md:grid-cols-2">
           <div class="md:ml-[6vw] overflow-hidden aspect43 my-auto max-w-[548px] mx-auto">
             <img
-              src="<?php echo T_DIRE_URI; ?>/assets/TempImage/5.jpg"
+              src="<?php echo T_DIRE_URI; ?>/assets/TempImage/パウンドケーキ.jpg"
               alt="foodimage1"
               class="w-full h-full object-cover"
             />
