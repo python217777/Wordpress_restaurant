@@ -47,7 +47,7 @@
           transform: scale(1);
         }
         50% {
-          transform: scale(0.9);
+          transform: scale(1.1);
         }
       }
       .animate-scale {
@@ -113,9 +113,9 @@
 
       }
       body {
-  opacity: 0;
-  animation: fadeIn 1s ease-in forwards;
-}
+        opacity: 0;
+        animation: fadeIn 1s ease-in forwards;
+      }
 
 @keyframes fadeIn {
   from { opacity: 0; }
