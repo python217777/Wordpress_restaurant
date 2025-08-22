@@ -34,7 +34,7 @@
       <section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1">
         <div class="md:hidden overflow-hidden">
           <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/5.jpg"
+            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店舗情報-2.jpg"
             alt="ReservatonImage"
             class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto"
           />
@@ -152,7 +152,7 @@
         </div>
         <div class="max-md:hidden overflow-hidden">
           <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/5.jpg"
+            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店舗情報-2.jpg"
             alt="ReservatonImage"
             class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto"
           />
