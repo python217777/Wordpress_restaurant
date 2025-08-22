@@ -67,7 +67,7 @@
         <div class="w-[65vw] mx-auto md:w-full md:grid md:grid-cols-2">
           <div class="md:ml-[6vw] overflow-hidden aspect43 my-auto max-w-[548px] mx-auto">
             <img
-              src="<?php echo T_DIRE_URI; ?>/assets/TempImage/5.jpg"
+              src="<?php echo T_DIRE_URI; ?>/assets/TempImage/ミートローフ.jpg"
               alt="foodimage1"
               class="w-full h-full object-cover"
             />

@@ -186,7 +186,7 @@
       <section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1">
         <div class="overflow-hidden responsible-boder-r">
           <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/5.jpg"
+            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/ご予約.jpg"
             alt="ReservatonImage"
             class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
           />
@@ -237,9 +237,8 @@
             
             <g clip-path="url(#circleClip)">
               <image
-                href="<?php echo T_DIRE_URI; ?>/assets/TempImage/6.jpg"
-                width="1000"
-                height="800"
+                href="<?php echo T_DIRE_URI; ?>/assets/TempImage/メニュー.jpg"
+                
                 class="object-cover transition-transform duration-700 ease-in-out group-hover:scale-125"
                 transform-origin="300 300"
                 x="-50"
@@ -295,7 +294,7 @@
       <section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1">
         <div class="md:hidden overflow-hidden">
           <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/5.jpg"
+            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店舗情報.jpg"
             alt="ReservatonImage"
             class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
           />
@@ -343,7 +342,7 @@
         </div>
         <div class="max-md:hidden overflow-hidden">
           <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/2.jpg"
+            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店舗情報.jpg"
             alt="ReservatonImage"
             class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
           />
@@ -356,7 +355,7 @@
       <section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1">
         <div class="overflow-hidden responsible-boder-r">
           <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/10.jpg"
+            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店内案内.png"
             alt="ReservatonImage"
             class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
           />
@@ -390,7 +389,7 @@
       <section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1">
         <div class="md:hidden overflow-hidden">
           <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/11.jpg"
+            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/お問い合わせ.webp"
             alt="ReservatonImage"
             class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
           />
@@ -433,7 +432,7 @@
         </div>
         <div class="max-md:hidden overflow-hidden">
           <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/11.jpg"
+            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/お問い合わせ.jpg"
             alt="ReservatonImage"
             class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
           />
