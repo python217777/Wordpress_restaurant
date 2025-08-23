@@ -100,7 +100,8 @@ get_header();
     <div class="col-span-8 flex justify-center mt-[60px]">
         <button
             type="submit"
-            class="w-[300px] h-[50px] text-white text-[15px] leading-[25px] flex justify-center items-center bg-[#665B09] transition-opacity duration-500 hover:opacity-70 rounded-lg"
+            id="submitBtn"
+            class="w-[300px] h-[50px] text-white text-[15px] leading-[25px] flex justify-center items-center bg-[#665B09] transition-opacity duration-500 hover:opacity-70 rounded-lg relative overflow-hidden"
         >
             送信する
         </button>
@@ -110,25 +111,37 @@ get_header();
 <!-- Message display -->
 <div id="formMessage" class="text-center text-[15px] my-[20px] text-red-500"></div>
 
+<style>
+/* Loader animation */
+.loader {
+  border: 3px solid #fff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+</style>
+
 <script>
 document.getElementById("contactForm").addEventListener("submit", function(e) {
     e.preventDefault(); // Stop page refresh
 
     let isValid = true;
-    const errors = [];
 
-    // Name validation
+    // Validation
     const name = document.getElementById("name").value.trim();
     const nameError = document.getElementById("nameError");
     if (name.length < 2) {
         nameError.textContent = "お名前を正しく入力してください。";
         nameError.classList.remove("hidden");
         isValid = false;
-    } else {
-        nameError.classList.add("hidden");
-    }
+    } else nameError.classList.add("hidden");
 
-    // Phone validation
     const phone = document.getElementById("phone").value.trim();
     const phoneError = document.getElementById("phoneError");
     const phoneRegex = /^0\d{1,4}-\d{1,4}-\d{3,4}$/;
@@ -136,11 +149,8 @@ document.getElementById("contactForm").addEventListener("submit", function(e) {
         phoneError.textContent = "電話番号の形式が正しくありません。例: 090-1234-5678";
         phoneError.classList.remove("hidden");
         isValid = false;
-    } else {
-        phoneError.classList.add("hidden");
-    }
+    } else phoneError.classList.add("hidden");
 
-    // Email validation
     const email = document.getElementById("email").value.trim();
     const emailError = document.getElementById("emailError");
     const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -148,22 +158,22 @@ document.getElementById("contactForm").addEventListener("submit", function(e) {
         emailError.textContent = "有効なメールアドレスを入力してください。";
         emailError.classList.remove("hidden");
         isValid = false;
-    } else {
-        emailError.classList.add("hidden");
-    }
+    } else emailError.classList.add("hidden");
 
-    // Message validation
     const message = document.getElementById("message").value.trim();
     const messageError = document.getElementById("messageError");
     if (message.length < 10) {
         messageError.textContent = "お問い合わせ内容を10文字以上で入力してください。";
         messageError.classList.remove("hidden");
         isValid = false;
-    } else {
-        messageError.classList.add("hidden");
-    }
+    } else messageError.classList.add("hidden");
 
-    if (!isValid) return; // stop if validation failed
+    if (!isValid) return;
+
+    // Button animation
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    btn.innerHTML = '<div class="loader"></div>'; // show loader
 
     // AJAX send
     const formData = new FormData(e.target);
@@ -185,6 +195,10 @@ document.getElementById("contactForm").addEventListener("submit", function(e) {
     })
     .catch(() => {
         document.getElementById("formMessage").innerHTML = "❌ 通信エラーが発生しました。";
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = "送信する"; // reset button
     });
 });
 </script>
