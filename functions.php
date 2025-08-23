@@ -18,7 +18,7 @@ define( 'S_DIRE_URI', get_stylesheet_directory_uri() );
 
 define( 'THEME_NOTE', 'yukinari-kogyo' );
 
-define( 'WPCF7_AUTOP', false );
+// define( 'WPCF7_AUTOP', false );
 
 error_reporting(0);
 
