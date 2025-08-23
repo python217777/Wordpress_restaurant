@@ -119,58 +119,62 @@
 
 <script>
   function validateForm() {
-    let isValid = true;
+  console.log("--------------------------");
 
-    // 名前
-    const name = document.getElementById("name").value.trim();
-    const nameError = document.getElementById("nameError");
-    if (name.length < 2) {
-      nameError.textContent = "お名前を正しく入力してください。";
-      nameError.classList.remove("hidden");
-      isValid = false;
-    } else {
-      nameError.classList.add("hidden");
-    }
+  let isValid = true;
 
-    // 電話番号
-    const phone = document.getElementById("phone").value.trim();
-    const phoneError = document.getElementById("phoneError");
-    const phoneRegex = /^0\d{1,4}-\d{1,4}-\d{3,4}$/;
-    if (!phoneRegex.test(phone)) {
-      phoneError.textContent = "電話番号の形式が正しくありません。例: 090-1234-5678";
-      phoneError.classList.remove("hidden");
-      isValid = false;
-    } else {
-      phoneError.classList.add("hidden");
-    }
-
-    // メール
-    const email = document.getElementById("email").value.trim();
-    const emailError = document.getElementById("emailError");
-    const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-    if (!emailRegex.test(email)) {
-      emailError.textContent = "有効なメールアドレスを入力してください。";
-      emailError.classList.remove("hidden");
-      isValid = false;
-    } else {
-      emailError.classList.add("hidden");
-    }
-
-    // メッセージ
-    const message = document.getElementById("message").value.trim();
-    const messageError = document.getElementById("messageError");
-    if (message.length < 10) {
-      messageError.textContent = "お問い合わせ内容を10文字以上で入力してください。";
-      messageError.classList.remove("hidden");
-      isValid = false;
-    } else {
-      messageError.classList.add("hidden");
-    }
-
-    if (isValid) {
-      alert("✅ 入力内容に問題ありません。送信を続行できます。");
-    }
+  // 名前
+  const name = document.getElementById("name").value.trim();
+  const nameError = document.getElementById("nameError");
+  if (name.length < 2) {
+    nameError.textContent = "お名前を正しく入力してください。";
+    nameError.classList.remove("hidden");
+    isValid = false;
+  } else {
+    nameError.classList.add("hidden");
   }
+
+  // 電話番号
+  const phone = document.getElementById("phone").value.trim();
+  const phoneError = document.getElementById("phoneError");
+  const phoneRegex = /^0\d{1,4}-\d{1,4}-\d{3,4}$/;
+  if (!phoneRegex.test(phone)) {
+    phoneError.textContent =
+      "電話番号の形式が正しくありません。例: 090-1234-5678";
+    phoneError.classList.remove("hidden");
+    isValid = false;
+  } else {
+    phoneError.classList.add("hidden");
+  }
+
+  // メール
+  const email = document.getElementById("email").value.trim();
+  const emailError = document.getElementById("emailError");
+  const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+  if (!emailRegex.test(email)) {
+    emailError.textContent = "有効なメールアドレスを入力してください。";
+    emailError.classList.remove("hidden");
+    isValid = false;
+  } else {
+    emailError.classList.add("hidden");
+  }
+
+  // メッセージ
+  const message = document.getElementById("message").value.trim();
+  const messageError = document.getElementById("messageError");
+  if (message.length < 10) {
+    messageError.textContent =
+      "お問い合わせ内容を10文字以上で入力してください。";
+    messageError.classList.remove("hidden");
+    isValid = false;
+  } else {
+    messageError.classList.add("hidden");
+  }
+
+  if (isValid) {
+    alert("✅ 入力内容に問題ありません。送信を続行できます。");
+  }
+}
 </script>
 
 	<?php get_footer(); ?>
