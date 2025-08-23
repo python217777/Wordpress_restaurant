@@ -1,34 +1,51 @@
 <?php
+/*
+Template Name: FrontPage
+*/
+if ( ! defined( 'ABSPATH' ) ) exit;
+get_header();
 
-	/*
-	Template Name: FrontPage
-	*/
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_submitted'])) {
+    $name    = sanitize_text_field($_POST['name']);
+    $phone   = sanitize_text_field($_POST['phone']);
+    $email   = sanitize_email($_POST['email']);
+    $message = sanitize_textarea_field($_POST['message']);
 
-	if ( ! defined( 'ABSPATH' ) ) exit;
-	get_header();
+    $to      = "your-email@example.com"; // 🔹 change this to your email
+    $subject = "新しいお問い合わせが届きました";
+    $body    = "お名前: $name\n電話番号: $phone\nメール: $email\n\n--- お問い合わせ内容 ---\n$message";
+    $headers = ["From: $name <$email>"];
 
+    if (wp_mail($to, $subject, $body, $headers)) {
+        echo '<script>alert("✅ 送信が完了しました。ありがとうございました！");</script>';
+    } else {
+        echo '<script>alert("❌ エラーが発生しました。もう一度お試しください。");</script>';
+    }
+}
 ?>
-  
-    <!--title-->
-      <div
-        class="text-[50px] md:text-[106px] leading-[35px] md:leading-[165px] flex justify-center my-[123px]"
-      >
-        お問い合わせ
-      </div>
 
-      <div
-        class="mb-[60px] border-b-[0.4px] border-smooth-gray w-[70vw] mx-auto"
-      ></div>
+<!--title-->
+<div
+  class="text-[50px] md:text-[106px] leading-[35px] md:leading-[165px] flex justify-center my-[123px]"
+>
+  お問い合わせ
+</div>
 
-      <div class="text-[15px] leading-[40px] text-center mx-auto w-[62vw]">
-        以下のフォームの項目を入力し、よろしければ「送信する」ボタンをクリックしてください。
-      </div>
+<div
+  class="mb-[60px] border-b-[0.4px] border-smooth-gray w-[70vw] mx-auto"
+></div>
 
-      <div
-        class="mt-[60px] border-b w-[70vw] mx-auto"
-      ></div>
+<div class="text-[15px] leading-[40px] text-center mx-auto w-[62vw]">
+  以下のフォームの項目を入力し、よろしければ「送信する」ボタンをクリックしてください。
+</div>
 
-      <section class="mx-[6vw] grid grid-cols-8">
+<div
+  class="mt-[60px] border-b w-[70vw] mx-auto"
+></div>
+
+<form method="POST" class="mx-[6vw] grid grid-cols-8" onsubmit="return validateForm();">
+  <input type="hidden" name="form_submitted" value="1">
   <div></div>
   <div class="col-span-6">
     <!-- 名前 -->
@@ -41,6 +58,7 @@
       </label>
       <input
         id="name"
+        name="name"
         type="text"
         placeholder="例）商工 太郎 "
         class="placeholder-[#665B09]/50 mt-[5px] w-full h-[60px] text-[15px] py-[10px] px-[20px] border border-[#665B09]/50 focus:border-blue-500 focus:outline-none transition-colors duration-300"
@@ -58,6 +76,7 @@
       </label>
       <input
         id="phone"
+        name="phone"
         type="text"
         placeholder="例）000-0000-0000 "
         class="placeholder-[#665B09]/50 mt-[5px] w-full h-[60px] text-[15px] py-[10px] px-[20px] border border-[#665B09]/50 focus:border-blue-500 focus:outline-none transition-colors duration-300"
@@ -75,6 +94,7 @@
       </label>
       <input
         id="email"
+        name="email"
         type="text"
         placeholder="例）example@gmail.com "
         class="placeholder-[#665B09]/50 mt-[5px] w-full h-[60px] text-[15px] py-[10px] px-[20px] border border-[#665B09]/50 focus:border-blue-500 focus:outline-none transition-colors duration-300"
@@ -101,26 +121,25 @@
       </label>
       <textarea
         id="message"
+        name="message"
         class="mt-[5px] w-full h-[250px] text-[15px] py-[10px] px-[20px] border border-[#665B09]/50 focus:border-blue-500 focus:outline-none transition-colors duration-300 resize-none overflow-y-auto overflow-x-hidden"
       ></textarea>
       <p id="messageError" class="text-red-600 text-[13px] mt-1 hidden"></p>
     </div>
   </div>
   <div></div>
-</section>
 
-<!-- ボタン -->
-<button
-  onclick="validateForm()"
-  class="w-[300px] h-[50px] text-white text-[15px] leading-[25px] flex justify-center items-center bg-[#665B09] mx-auto mt-[60px] transition-opacity duration-500 hover:opacity-70"
->
-  入力内容を確認する
-</button>
+  <!-- ボタン -->
+  <button
+    type="submit"
+    class="w-[300px] h-[50px] text-white text-[15px] leading-[25px] flex justify-center items-center bg-[#665B09] mx-auto mt-[60px] transition-opacity duration-500 hover:opacity-70"
+  >
+    入力内容を確認する
+  </button>
+</form>
 
 <script>
-  function validateForm() {
-  console.log("--------------------------");
-
+function validateForm() {
   let isValid = true;
 
   // 名前
@@ -139,8 +158,7 @@
   const phoneError = document.getElementById("phoneError");
   const phoneRegex = /^0\d{1,4}-\d{1,4}-\d{3,4}$/;
   if (!phoneRegex.test(phone)) {
-    phoneError.textContent =
-      "電話番号の形式が正しくありません。例: 090-1234-5678";
+    phoneError.textContent = "電話番号の形式が正しくありません。例: 090-1234-5678";
     phoneError.classList.remove("hidden");
     isValid = false;
   } else {
@@ -163,18 +181,15 @@
   const message = document.getElementById("message").value.trim();
   const messageError = document.getElementById("messageError");
   if (message.length < 10) {
-    messageError.textContent =
-      "お問い合わせ内容を10文字以上で入力してください。";
+    messageError.textContent = "お問い合わせ内容を10文字以上で入力してください。";
     messageError.classList.remove("hidden");
     isValid = false;
   } else {
     messageError.classList.add("hidden");
   }
 
-  if (isValid) {
-    alert("✅ 入力内容に問題ありません。送信を続行できます。");
-  }
+  return isValid;
 }
 </script>
 
-	<?php get_footer(); ?>
+<?php get_footer(); ?>

@@ -124,6 +124,7 @@
 
     </style>
     <?php wp_head(); ?>
+    
   </head>
   <body class="bg-white text-nature-color font-Mincho">
 
