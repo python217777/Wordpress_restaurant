@@ -1,224 +1,138 @@
 <?php
-
-	/*
-	Template Name: FrontPage
-	*/
-
-	if ( ! defined( 'ABSPATH' ) ) exit;
-	get_header();
-  	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
-	$blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_category_id') : "100";
-
+/*
+Template Name: FrontPage
+*/
+if ( ! defined( 'ABSPATH' ) ) exit;
+get_header();
+$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+$blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_category_id') : "100";
 ?>
 
-	    <div class="absolute w-full z-10 grid grid-cols-16">
-        <div></div>
-        <div class="col-span-14 text-center">
-          <div
-            class="text-center text-[15px] lg:text-[20px] leading-[80px] lg:leading-[100px]"
-          >
-            🌿
-          </div>
+<!-- Include AOS (Animate On Scroll) -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: true,
+    });
+  });
+</script>
 
-          <div
-            class="text-center text-[25px] sm:text-[40px] sm:leading-[60px] lg:text-[50px] lg:leading-[100px] leading-[50px] tracking-[20px] md:tracking-[30px] lg:tracking-[50px]"
-          >
-            WLECOME
-          </div>
+<div class="absolute w-full z-10 grid grid-cols-16">
+  <div></div>
+  <div class="col-span-14 text-center" data-aos="fade-down">
+    <div class="text-center text-[15px] lg:text-[20px] leading-[80px] lg:leading-[100px]">🌿</div>
+    <div class="text-center text-[25px] sm:text-[40px] sm:leading-[60px] lg:text-[50px] lg:leading-[100px] leading-[50px] tracking-[20px] md:tracking-[30px] lg:tracking-[50px]">
+      WLECOME
+    </div>
+    <div class="text-center text-[42px] leading-[80px] sm:text-[80px] sm:leading-[106px] lg:text-[106px] lg:leading-[150px]" data-aos="fade-up">
+      森のビュッフェ<br />
+      <p class="tracking-[40px] sm:tracking-[30px]">SUN</p>
+    </div>
+  </div>
+  <div></div>
+</div>
 
-          <div
-            class="text-center text-[42px] leading-[80px] sm:text-[80px] sm:leading-[106px] lg:text-[106px] lg:leading-[150px]"
-          >
-            森のビュッフェ<br />
-            <p class="tracking-[40px] sm:tracking-[30px]">SUN</p>
-          </div>
-        </div>
-        <div></div>
+<section class="lg:mt-[378px] relative mt-[204px] md:mt-[300px]" data-aos="zoom-in">
+  <div class="overflow-hidden flex justify-center">
+    <img
+      src="<?php echo T_DIRE_URI; ?>/assets/TempImage/2.jpg"
+      alt="heroIMG"
+      class="w-[225px] h-[371px] min-[450px]:w-[380px] min-[450px]:h-[500px] lg:h-[580px] lg:w-[470px] object-cover rounded-t-full transform transition duration-700 hover:scale-105"
+    />
+  </div>
+
+  <div class="absolute top-0 mt-[200px] lg:mt-[301px] z-10 w-full grid grid-cols-2 hidden md:grid" data-aos="fade-up">
+    <div class="lg:ml-[10vw] md:ml-[6vw] xl:ml-[16.8vw]">
+      <div class="text-[18px] leading-[28px]">お知らせ</div>
+      <div class="text-[15px] leading-[40px]">
+        <?php
+          $current_page = max(1, get_query_var('paged') ? get_query_var('paged') : get_query_var('page'));
+          $args = [
+            'post_type'      => 'blog',
+            'post_status'    => 'publish',
+            'paged'          => $current_page,
+            'posts_per_page' => 10,
+            'orderby'        => 'post_date',
+            'order'          => 'DESC',
+          ];
+          if ( ! empty( $blog_category_id ) && (int)$blog_category_id !== 100 ) {
+            $args['tax_query'] = [[
+              'taxonomy' => 'blog_category',
+              'field'    => 'term_id',
+              'terms'    => (int)$blog_category_id,
+            ]];
+          }
+          $custom_query = new WP_Query($args);
+        ?>
+        <?php if ( $custom_query->have_posts() ) : ?>
+          <?php $count = 0; ?>
+          <?php while ( $custom_query->have_posts() ) : $custom_query->the_post();
+            $count++;
+            if($count >= 3)break;
+            $title = mb_strimwidth(strip_tags(get_the_title()), 0, 10, '…', 'UTF-8');
+          ?>
+            <div><?php the_time('Y.m.d'); ?></div>
+            <div><?php echo esc_html($title); ?></div>
+          <?php endwhile; ?>
+          <?php wp_reset_postdata(); ?>
+        <?php endif; ?>
       </div>
+      <a href="<?php echo esc_url(home_url('/')); ?>notice" class="text-[13px] leading-[25px]">
+        <p class="nav-button h-[30px] w-[120px] flex items-center transform transition duration-300 hover:scale-105">
+          もっと見る →
+        </p>
+      </a>
+    </div>
 
-      <section class="lg:mt-[378px] relative mt-[204px] md:mt-[300px]">
-        <div class="overflow-hidden flex justify-center">
-          <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/2.jpg"
-            alt="heroIMG"
-            class="w-[225px] h-[371px] min-[450px]:w-[380px] min-[450px]:h-[500px] lg:h-[580px] lg:w-[470px] object-cover rounded-t-full"
-          />
-        </div>
+    <div class="right-0 text-right lg:mr-[10vw] md:mr-[6vw] xl:mr-[16.8vw]" data-aos="fade-left">
+      <div class="text-[18px] leading-[28px]">営業時間</div>
+      <div class="text-[15px] leading-[40px]">平日 11:00 – 14:30 <br />（L.O.14時）</div>
+      <div class="text-[18px] leading-[28px] mt-[50px]">定休日</div>
+      <div class="text-[15px] leading-[40px]">月曜定休</div>
+    </div>
+  </div>
+</section>
 
-        <div
-          class="absolute top-0 mt-[200px] lg:mt-[301px] z-10 w-full grid grid-cols-2 hidden md:grid"
-        >
-          <div class="lg:ml-[10vw] md:ml-[6vw] xl:ml-[16.8vw]">
-            <div class="text-[18px] leading-[28px]">お知らせ</div>
-            <div class="text-[15px] leading-[40px]" id="hero_notice">
-            <?php
-              // --- current page (works for /page/2/ and ?paged=2 and static front page) ---
-              $current_page = max(1, get_query_var('paged') ? get_query_var('paged') : get_query_var('page'));
+<div class="my-[60px] border-b"></div>
 
-              // --- build query ---
-              $args = [
-                'post_type'      => 'blog',
-                'post_status'    => 'publish',
-                'paged'          => $current_page, // FIXED: use the real current page
-                'posts_per_page' => 10,
-                'orderby'        => 'post_date',
-                'order'          => 'DESC',
-              ];
+<section class="mx-[6vw] grid grid-cols-10" data-aos="fade-up">
+  <div></div>
+  <div class="col-span-8 text-[17px] leading-40px">
+    森のビュッフェ SUNでは、薄味で優しい味つけを心がけています。野菜料理は丁寧に店内で手作りし、お肉はたっぷりと使用。どの世代にも満足いただける内容を、安心価格（大人1,500円）でご提供。ご家族やご友人と、くつろぎの時間をお楽しみください。インターネットでのご予約も可能です。
+  </div>
+  <div></div>
+</section>
 
-              if ( ! empty( $blog_category_id ) && (int)$blog_category_id !== 100 ) {
-                $args['tax_query'] = [[
-                  'taxonomy' => 'blog_category',
-                  'field'    => 'term_id',
-                  'terms'    => (int)$blog_category_id,
-                ]];
-              }
+<div class="my-[60px] border-b"></div>
 
-              $custom_query = new WP_Query($args);
-            ?>
-            <?php if ( $custom_query->have_posts() ) : ?>
-              <?php $count = 0 ?>
-              <?php while ( $custom_query->have_posts() ) : $custom_query->the_post();
-                $count++;
-                if($count >= 3)break;
-                $title = mb_strimwidth(strip_tags(get_the_title()), 0, 10, '…', 'UTF-8');
-              ?>
-                <div id="hero_title1"> <?php the_time('Y.m.d'); ?></div>
-                <div id="hero_content1"><?php echo esc_html($title); ?></div>
-              <?php endwhile; ?>
-              <?php wp_reset_postdata(); ?>
-              <?php endif; ?>
-            </div>
-            <a href="<?php echo esc_url(home_url('/')); ?>notice" class="text-[13px] leading-[25px]">
-              <p class="nav-button h-[30px] w-[120px] flex items-center">
-                もっと見る →
-              </p>
-            </a>
-          </div>
-          
-          <div
-            class="right-0 text-right lg:mr-[10vw] md:mr-[6vw] xl:mr-[16.8vw]"
-          >
-            <div class="text-[18px] leading-[28px]">営業時間</div>
-            <div class="text-[15px] leading-[40px]">
-              平日 11:00 – 14:30 <br />（L.O.14時）
-            </div>
-            <div class="text-[18px] leading-[28px] mt-[50px]">定休日</div>
-            <div class="text-[15px] leading-[40px]">月曜定休</div>
-          </div>
-        </div>
-        <div class="md:hidden w-[85vw] min-[375px]:w-[71.73vw] mx-auto">
-          <div
-            class="border-b w-[71.73vw] mx-auto my-[30px]"
-          ></div>
+<!-- Reservation Section -->
+<section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1" data-aos="fade-right">
+  <div class="overflow-hidden responsible-boder-r">
+    <img
+      src="<?php echo T_DIRE_URI; ?>/assets/TempImage/ご予約.jpg"
+      alt="ReservationImage"
+      class="w-[298px] h-[470px] object-cover rounded-t-full mx-auto transform transition duration-700 hover:scale-105"
+    />
+    <div class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[30px] md:my-0"></div>
+  </div>
+  <div class="max-md:w-[70vw] max-md:mx-auto md:mt-[130px] md:ml-[4.51vw]" data-aos="fade-left">
+    <div class="text-[15px] leading-[20px]">RESERVATION</div>
+    <div class="md:text-[85px] text-[50px] leading-[90px] md:mt-[30px] mt-[20px]">ご予約</div>
+    <div class="text-[17px] leading-[25px] md:mt-[60px] mt-[40px]">24時間TORETAでご予約いただけます。</div>
+    <div class="nav-button h-[47px] w-[120px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center transform transition duration-300 hover:scale-105 hover:shadow-lg">
+      <a href="https://toreta.in">予約する →</a>
+    </div>
+  </div>
+</section>
 
-          <div class="flex">
-            <div class="text-[18px] leading-[28px]">お知らせ</div>
-            <div class="ml-4">
-              <div class="text-[15px] leading-[40px]" id="hero_notice">
-                <?php
-                  // --- current page (works for /page/2/ and ?paged=2 and static front page) ---
-                  $current_page = max(1, get_query_var('paged') ? get_query_var('paged') : get_query_var('page'));
+<div class="my-[60px] border-b"></div>
 
-                  // --- build query ---
-                  $args = [
-                    'post_type'      => 'blog',
-                    'post_status'    => 'publish',
-                    'paged'          => $current_page, // FIXED: use the real current page
-                    'posts_per_page' => 10,
-                    'orderby'        => 'post_date',
-                    'order'          => 'DESC',
-                  ];
-
-                  if ( ! empty( $blog_category_id ) && (int)$blog_category_id !== 100 ) {
-                    $args['tax_query'] = [[
-                      'taxonomy' => 'blog_category',
-                      'field'    => 'term_id',
-                      'terms'    => (int)$blog_category_id,
-                    ]];
-                  }
-
-                  $custom_query = new WP_Query($args);
-                ?>
-                <?php if ( $custom_query->have_posts() ) : ?>
-                  <?php $count = 0 ?>
-                  <?php while ( $custom_query->have_posts() ) : $custom_query->the_post();
-                    $count++;
-                    if($count >= 3)break;
-                    $title = mb_strimwidth(strip_tags(get_the_title()), 0, 10, '…', 'UTF-8');
-                  ?>
-                    <div id="hero_title1"> <?php the_time('Y.m.d'); ?></div>
-                    <div id="hero_content1"><?php echo esc_html($title); ?></div>
-                  <?php endwhile; ?>
-                  <?php wp_reset_postdata(); ?>
-                  <?php endif; ?>
-              </div>
-              <a href="<?php echo esc_url(home_url('/')); ?>notice" class="text-[13px] leading-[25px] mt-[8px]">
-                もっと見る →
-              </a>
-            </div>
-          </div>
-
-          <div class="flex mt-[9px]">
-            <div class="text-[18px] leading-[28px] mt-[10px]">営業時間</div>
-            <div class="text-[15px] leading-[40px] ml-4">
-              平日 11:00 – 14:30 <br />（L.O.14時）
-            </div>
-          </div>
-          <div class="flex mt-[9px]">
-            <div class="text-[18px] leading-[28px]">定休日</div>
-            <div class="text-[15px] leading-[40px] ml-9">月曜定休</div>
-          </div>
-        </div>
-      </section>
-
-      <div class="my-[60px] border-b"></div>
-
-      <section class="mx-[6vw] grid grid-cols-10">
-        <div></div>
-        <div class="col-span-8 text-[17px] leading-40px">
-          森のビュッフェ SUNでは、薄味で優しい味つけを心がけています。野菜料理は丁寧に店内で手作りし、お肉はたっぷりと使用。どの世代にも満足いただける内容を、安心価格（大人1,500円）でご提供。ご家族やご友人と、くつろぎの時間をお楽しみください。インターネットでのご予約も可能です。
-        </div>
-        <div></div>
-      </section>
-
-      <div class="my-[60px] border-b"></div>
-      <!-- Reservation Section -->
-      <section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1">
-        <div class="overflow-hidden responsible-boder-r">
-          <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/ご予約.jpg"
-            alt="ReservatonImage"
-            class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
-          />
-          <div
-            class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[30px] md:my-0"
-          ></div>
-        </div>
-
-        <div
-          class="max-md:w-[70vw] max-md:mx-auto md:mt-[130px] md:ml-[4.51vw] [@media(min-width:768px)_and_(max-width:1023px)]:mt-[80px]"
-        >
-          <div class="text-[15px] leading-[20px]">RESERVATION</div>
-          <div
-            class="md:text-[85px] text-[50px] leading-[90px] md:mt-[30px] mt-[20px]"
-          >
-            ご予約
-          </div>
-          <div class="text-[17px] leading-[25px] md:mt-[60px] mt-[40px]">
-            24時間TORETAでご予約いただけます。
-          </div>
-          <div class="nav-button h-[47px] w-[120px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center">
-            <a href="https://toreta.in">
-              予約する →
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <div class="my-[60px] border-b"></div>
-
-      <!-- Menu Section -->
-      <section>
+<!-- Menu Section -->
+<section>
         <div class=" w-full relative">
           <a href="<?php echo esc_url(home_url('/')); ?>menu" class="flex justify-center items-center">
           <svg
@@ -287,157 +201,91 @@
         
       </section>
 
-      <div class="my-[60px] border-b"></div>
+<div class="my-[60px] border-b"></div>
 
-      <!-- Store Information Section -->
+<!-- Store Information Section -->
+<section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1" data-aos="fade-up">
+  <div class="md:hidden overflow-hidden">
+    <img
+      src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店舗情報.jpg"
+      alt="StoreImage"
+      class="w-[298px] h-[470px] object-cover rounded-t-full mx-auto transform transition duration-700 hover:scale-105"
+    />
+  </div>
+  <div class="max-md:w-[70vw] max-md:mx-auto md:ml-[4.51vw] responsible-boder-r">
+    <div class="md:mt-[130px] text-[15px] leading-[20px]">ABOUT US</div>
+    <div class="min-[880px]:text-[85px] md:text-[60px] text-[50px] leading-[95px] md:mt-[30px] mt-[20px]">店舗情報</div>
+    <div class="flex mt-[9px] text-[17px] leading-[40px]">
+      <p class="whitespace-nowrap tracking-tight">住所</p>
+      <p class="ml-4">:</p>
+      <p class="ml-2">〒880-0834 <br />宮崎県宮崎市新別府町前浜 <span>1401-224</span></p>
+    </div>
+    <div class="flex mt-[9px] text-[17px] leading-[40px]">
+      <div>座席数</div>
+      <div>:</div>
+      <div class="ml-2">約50席</div>
+    </div>
+    <div class="nav-button h-[47px] w-[132px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center transform transition duration-300 hover:scale-105 hover:shadow-lg">
+      <a href="<?php echo esc_url(home_url('/')); ?>infor">もっと見る →</a>
+    </div>
+  </div>
+  <div class="max-md:hidden overflow-hidden">
+    <img
+      src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店舗情報.jpg"
+      alt="StoreImage"
+      class="w-[298px] h-[470px] object-cover rounded-t-full mx-auto transform transition duration-700 hover:scale-105"
+    />
+  </div>
+</section>
 
-      <section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1">
-        <div class="md:hidden overflow-hidden">
-          <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店舗情報.jpg"
-            alt="ReservatonImage"
-            class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
-          />
-          <div
-            class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[30px] md:my-0"
-          ></div>
-        </div>
-        <div
-          class="max-md:w-[70vw] max-md:mx-auto md:ml-[4.51vw] responsible-boder-r"
-        >
-          <div
-            class="md:mt-[130px] text-[15px] leading-[20px] [@media(min-width:768px)_and_(max-width:1023px)]:mt-[80px]"
-          >
-            ABOUT US
-          </div>
-          <div
-            class="min-[880px]:text-[85px] md:text-[60px] text-[50px] leading-[95px] md:mt-[30px] mt-[20px]"
-          >
-            店舗情報
-          </div>
-          <div
-            class="flex max-[400px]:text-[15px] mt-[9px] text-[17px] md:text-[15px] min-[810px]:text-[17px] leading-[40px]"
-          >
-            <p class="whitespace-nowrap tracking-tight">住所</p>
-            <p class="ml-4">:</p>
-            <p class="ml-2">
-              〒880-0834
-              <br />宮崎県宮崎市新別府町前浜
-              <span>1401-224</span>
-            </p>
-          </div>
-          <div
-            class="flex max-[370px]:text-[15px] mt-[9px] text-[17px] leading-[40px]"
-          >
-            <div class="">座席数</div>
-            <div class="">:</div>
-            <div class="ml-2">約50席</div>
-          </div>
-          <div
-            class="nav-button h-[47px] w-[132px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center"
-          >
-            <a href="<?php echo esc_url(home_url('/')); ?>infor">もっと見る →</a>
-              
-          </div>
-        </div>
-        <div class="max-md:hidden overflow-hidden">
-          <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店舗情報.jpg"
-            alt="ReservatonImage"
-            class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
-          />
-        </div>
-      </section>
+<div class="my-[60px] border-b"></div>
 
-      <div class="my-[60px] border-b"></div>
+<!-- Inside Store Section -->
+<section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1" data-aos="fade-up">
+  <div class="overflow-hidden responsible-boder-r">
+    <img
+      src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店内案内.png"
+      alt="InsideStoreImage"
+      class="w-[298px] h-[470px] object-cover rounded-t-full mx-auto transform transition duration-700 hover:scale-105"
+    />
+  </div>
+  <div class="max-md:w-[70vw] max-md:mx-auto md:mt-[130px] md:ml-[4.51vw]">
+    <div class="text-[15px] leading-[20px]">INSIDE</div>
+    <div class="min-[880px]:text-[85px] md:text-[60px] text-[50px] leading-[95px] md:mt-[30px] mt-[20px]">店内案内</div>
+    <div class="text-[17px] leading-[25px] md:mt-[60px] mt-[40px]">白と木目が織り成す、自然のぬくもりに包まれた落ち着きの空間</div>
+    <div class="nav-button h-[47px] w-[132px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center transform transition duration-300 hover:scale-105 hover:shadow-lg">
+      <a href="<?php echo esc_url(home_url('/')); ?>inside">もっと見る →</a>
+    </div>
+  </div>
+</section>
 
-      <!-- Inside Store Section -->
-      <section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1">
-        <div class="overflow-hidden responsible-boder-r">
-          <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店内案内.png"
-            alt="ReservatonImage"
-            class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
-          />
-          <div
-            class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[30px] md:my-0"
-          ></div>
-        </div>
+<div class="my-[60px] border-b"></div>
 
-        <div
-          class="max-md:w-[70vw] max-md:mx-auto md:mt-[130px] md:ml-[4.51vw] [@media(min-width:768px)_and_(max-width:1023px)]:mt-[80px]"
-        >
-          <div class="text-[15px] leading-[20px]">INSIDE</div>
-          <div
-            class="min-[880px]:text-[85px] md:text-[60px] text-[50px] leading-[95px] md:mt-[30px] mt-[20px]"
-          >
-            店内案内
-          </div>
-          <div class="text-[17px] leading-[25px] md:mt-[60px] mt-[40px]">
-            白と木目が織り成す、自然のぬくもりに包まれた落ち着きの空間
-          </div>
-          <div
-            class="nav-button h-[47px] w-[132px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center">
-            <a href="<?php echo esc_url(home_url('/')); ?>inside">もっと見る →</a>
-          </div>
-        </div>
-      </section>
+<!-- Contact Section -->
+<section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1" data-aos="fade-up">
+  <div class="md:hidden overflow-hidden">
+    <img
+      src="<?php echo T_DIRE_URI; ?>/assets/TempImage/お問い合わせ.webp"
+      alt="ContactImage"
+      class="w-[298px] h-[470px] object-cover rounded-t-full mx-auto transform transition duration-700 hover:scale-105"
+    />
+  </div>
+  <div class="max-md:w-[70vw] max-md:mx-auto md:ml-[4.51vw] responsible-boder-r">
+    <div class="md:mt-[130px] text-[15px] leading-[20px]">CONTACT</div>
+    <div class="md:text-[45px] lg:text-[55px] leading-[65px] md:mt-[30px] mt-[20px] text-[40px] whitespace-nowrap tracking-tight">お問い合わせ</div>
+    <div class="flex mt-[9px] text-[17px] leading-[40px]"><p>電 話</p><p class="ml-3">:</p><p class="ml-2">0745-23-4567</p></div>
+    <div class="flex mt-[9px] text-[17px] leading-[40px]"><div>メール</div><div class="ml-3">:</div><div class="ml-2">example@test.com</div></div>
+    <button class="nav-button h-[47px] w-[130px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center whitespace-nowrap tracking-tight transform transition duration-300 hover:scale-105 hover:shadow-lg">
+      <a href="<?php echo esc_url(home_url('/')); ?>contact">お問い合わせ →</a>
+    </button>
+  </div>
+  <div class="max-md:hidden overflow-hidden">
+    <img
+      src="<?php echo T_DIRE_URI; ?>/assets/TempImage/お問い合わせ.jpg"
+      alt="ContactImage"
+      class="w-[298px] h-[470px] object-cover rounded-t-full mx-auto transform transition duration-700 hover:scale-105"
+    />
+  </div>
+</section>
 
-      <div class="my-[60px] border-b"></div>
-
-      <!-- Contact Section -->
-      <section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1">
-        <div class="md:hidden overflow-hidden">
-          <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/お問い合わせ.webp"
-            alt="ReservatonImage"
-            class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
-          />
-          <div
-            class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[30px] md:my-0"
-          ></div>
-        </div>
-        <div
-          class="max-md:w-[70vw] max-md:mx-auto md:ml-[4.51vw] responsible-boder-r"
-        >
-          <div
-            class="md:mt-[130px] text-[15px] leading-[20px] [@media(min-width:768px)_and_(max-width:1023px)]:mt-[80px]"
-          >
-            CONTACT
-          </div>
-          <div
-            class="text-[55px] max-[450px]:text-[40px] leading-[65px] md:mt-[30px] mt-[20px] whitespace-nowrap tracking-tight"
-          >
-            お問い合わせ
-          </div>  
-          <div
-            class="flex max-[400px]:text-[15px] mt-[9px] text-[17px] md:text-[15px] min-[810px]:text-[17px] leading-[40px]"
-          >
-            <p class="">電 話</p>
-            <p class="ml-3">:</p>
-            <p class="ml-2">0745-23-4567</p>
-          </div>
-          <div
-            class="flex max-[370px]:text-[15px] mt-[9px] text-[17px] leading-[40px]"
-          >
-            <div class="">メール</div>
-
-            <div class="">:</div>
-            <div class="ml-2">example@test.com</div>
-          </div>
-          <button
-            class="nav-button h-[47px] w-[130px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center whitespace-nowrap tracking-tight">
-            <a href="<?php echo esc_url(home_url('/')); ?>contact">お問い合わせ →</a>
-          </button>
-        </div>
-        <div class="max-md:hidden overflow-hidden">
-          <img
-            src="<?php echo T_DIRE_URI; ?>/assets/TempImage/お問い合わせ.jpg"
-            alt="ReservatonImage"
-            class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto animate-scale"
-          />
-        </div>
-      </section>
-
-	   
 <?php get_footer(); ?>
