@@ -11,16 +11,16 @@
   
     <!--title-->
       <div
-        class="text-[50px] md:text-[106px] leading-[35px] md:leading-[165px] flex justify-center my-[123px]"
+        class="text-[50px] md:text-[106px] leading-[35px] md:leading-[165px] flex justify-center my-[123px] animate-fadeIn"
       >
         店舗情報
       </div>
 
       <div
-        class="mb-[60px] border-b w-[70vw] mx-auto"
+        class="mb-[60px] border-b w-[70vw] mx-auto animate-fadeIn"
       ></div>
 
-      <section class="mx-[6vw] grid grid-cols-10">
+      <section class="mx-[6vw] grid grid-cols-10 ">
         <div></div>
         <div class="col-span-8 text-[17px] leading-[40px] tracking-[-0.5px]">
           森のビュッフェ SUNでは、薄味で優しい味つけを心がけています。野菜料理は丁寧に店内で手作りし、お肉はたっぷりと使用。どの世代にも満足いただける内容を、安心価格（大人1,500円）でご提供。ご家族やご友人と、くつろぎの時間をお楽しみください。インターネットでのご予約も可能です。
@@ -28,21 +28,21 @@
         <div></div>
       </section>
       <div
-        class="my-[60px] border-b w-[70vw] mx-auto"
+        class="my-[60px] border-b w-[70vw] mx-auto animate-fadeIn"
       ></div>
 
       <section class="mx-[6vw] grid md:grid-cols-2 grid-cols-1">
-        <div class="md:hidden overflow-hidden">
+        <div class="md:hidden overflow-hidden animate-zoomIn">
           <img
             src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店舗情報-2.jpg"
             alt="ReservatonImage"
-            class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto"
+            class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto transition-transform duration-500 hover:scale-105"
           />
           <div
             class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[60px] md:my-[0px]"
           ></div>
         </div>
-        <div class="hidden md:block responsible-boder-r">
+        <div class="hidden md:block responsible-boder-r ">
           <div class="grid grid-cols-10 mt-[21px]">
             <div class="lg:col-span-2 md:col-span-1"></div>
             <div class="col-span-2 text-[17px] leading-[40px] text-right">
@@ -118,7 +118,7 @@
             </div>
           </div>
         </div>
-        <div class="md:hidden grid grid-cols-8">
+        <div class="md:hidden grid grid-cols-8 ">
           <div></div>
           <div class="col-span-6">
             <div class="text-[18px] leading-[40px]">住所</div>
@@ -150,18 +150,18 @@
             </div>
           </div>
         </div>
-        <div class="max-md:hidden overflow-hidden">
+        <div class="max-md:hidden overflow-hidden animate-zoomIn">
           <img
             src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店舗情報-2.jpg"
             alt="ReservatonImage"
-            class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto"
+            class="w-[298px] h-[470px] max-[400px]:w-[60vw] max-[400px]:h-[371px] object-cover rounded-t-full mx-auto transition-transform duration-500 hover:scale-105"
           />
         </div>
       </section>
 
-      <div class="my-[60px] border-b"></div>
+      <div class="my-[60px] border-b animate-fadeIn"></div>
 
-      <section class="w-[75vw] mx-auto h-[500px]">
+      <section class="w-[75vw] mx-auto h-[500px] ">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3418.2582141369034!2d131.463399315482!3d31.9293886812411!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3538b7634d3d4ff7%3A0xb3a9f8dd95a835a!2z44CSODgwLTA4MzQg5a6u5Z-O55yM5a6u5Z-O5biC5paw5r2f55S677yR77yU77yX77yR77yS!5e0!3m2!1sja!2sjp!4v1700000000000"
           class="w-full h-full"
@@ -174,3 +174,30 @@
       </section>
 
 	<?php get_footer(); ?>
+
+<!-- ========================== -->
+<!-- ✨ Tailwind カスタムアニメーション定義 ✨ -->
+<!-- ========================== -->
+<style>
+/* フェードイン */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fadeIn {
+  animation: fadeIn 1.2s ease-in-out forwards;
+}
+
+/* 下からフェードイン */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ズームイン */
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+</style>
