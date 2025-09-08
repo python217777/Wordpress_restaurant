@@ -45,11 +45,13 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
       alt="heroIMG"
       class="w-[225px] h-[371px] min-[450px]:w-[380px] min-[450px]:h-[500px] lg:h-[580px] lg:w-[470px] object-cover rounded-t-full transform transition duration-700 hover:scale-105"
     />
+
   </div>
 
+  <div class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[30px] md:my-0"></div>
   <div class="absolute top-0 mt-[200px] lg:mt-[301px] z-10 w-full grid grid-cols-2 hidden md:grid" data-aos="fade-up">
     <div class="lg:ml-[10vw] md:ml-[6vw] xl:ml-[16.8vw]">
-      <div class="text-[18px] leading-[28px]">お知らせ</div>
+      <div class="text-[18px] leading-[28px] ">お知らせ</div>
       <div class="text-[15px] leading-[40px]">
         <?php
           $current_page = max(1, get_query_var('paged') ? get_query_var('paged') : get_query_var('page'));
@@ -84,7 +86,7 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
         <?php endif; ?>
       </div>
       <a href="<?php echo esc_url(home_url('/')); ?>notice" class="text-[13px] leading-[25px]">
-        <p class="nav-button h-[30px] w-[120px] flex items-center transform transition duration-300 hover:scale-105">
+        <p class="nav-button h-[30px] ml-[-8px] w-[120px] flex items-center transform transition duration-300 hover:scale-105">
           もっと見る →
         </p>
       </a>
@@ -96,6 +98,69 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
       <div class="text-[18px] leading-[28px] mt-[50px]">定休日</div>
       <div class="text-[15px] leading-[40px]">月曜定休</div>
     </div>
+  </div>
+
+  <div class="md:hidden mx-auto">
+    <div class="grid grid-cols-7">
+      <div></div>
+      <div class="text-[18px] leading-[40px] col-span-2 w-fit mx-auto">お知らせ</div>
+      <div class="text-[15px] leading-[40px] col-span-4">
+        <?php
+          $current_page = max(1, get_query_var('paged') ? get_query_var('paged') : get_query_var('page'));
+          $args = [
+            'post_type'      => 'blog',
+            'post_status'    => 'publish',
+            'paged'          => $current_page,
+            'posts_per_page' => 10,
+            'orderby'        => 'post_date',
+            'order'          => 'DESC',
+          ];
+          if ( ! empty( $blog_category_id ) && (int)$blog_category_id !== 100 ) {
+            $args['tax_query'] = [[
+              'taxonomy' => 'blog_category',
+              'field'    => 'term_id',
+              'terms'    => (int)$blog_category_id,
+            ]];
+          }
+          $custom_query = new WP_Query($args);
+        ?>
+        <?php if ( $custom_query->have_posts() ) : ?>
+          <?php $count = 0; ?>
+          <?php while ( $custom_query->have_posts() ) : $custom_query->the_post();
+            $count++;
+            if($count >= 3)break;
+            $title = mb_strimwidth(strip_tags(get_the_title()), 0, 10, '…', 'UTF-8');
+          ?>
+            <div class="<?php if ( $count > 1 ) echo 'mt-3'; ?>">
+              <?php the_time('Y.m.d'); ?>
+            </div>
+            <div class="ml-3"><?php echo esc_html($title); ?></div>
+          <?php endwhile; ?>
+          <?php wp_reset_postdata(); ?>
+        <?php endif; ?>
+      </div>
+    </div>
+    <a href="<?php echo esc_url(home_url('/')); ?>notice" class="text-[13px] leading-[25px] ">
+      <p class="nav-button h-[30px] w-[120px] mt-5 w-fit mx-auto flex items-center transform transition duration-300 hover:scale-105">
+        もっと見る →
+      </p>
+    </a>
+    <div class="grid grid-cols-7 mt-5">
+      <div></div>
+      <div class="text-[18px] leading-[40px] col-span-2 w-fit mx-auto">営業時間</div>
+      <div class="text-[15px] leading-[40px] col-span-4">
+        <div>平日 11:00 – 14:30 </div>
+        <div>（L.O.14時） </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-7 mt-5">
+      <div></div>
+      <div class="text-[18px] leading-[40px] col-span-2 w-fit mx-auto">定休日</div>
+      <div class="text-[15px] leading-[40px] col-span-4">
+        月曜定休
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -213,22 +278,25 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
       alt="StoreImage"
       class="w-[298px] h-[470px] object-cover rounded-t-full mx-auto transform transition duration-700 hover:scale-105"
     />
+    <div class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[30px] md:my-0"></div>
   </div>
-  <div class="max-md:w-[70vw] max-md:mx-auto md:ml-[4.51vw] responsible-boder-r">
-    <div class="md:mt-[130px] text-[15px] leading-[20px]">ABOUT US</div>
-    <div class="min-[880px]:text-[85px] md:text-[60px] text-[50px] leading-[95px] md:mt-[30px] mt-[20px]">店舗情報</div>
-    <div class="flex mt-[9px] text-[17px] leading-[40px]">
-      <p class="whitespace-nowrap tracking-tight">住所</p>
-      <p class="ml-4">:</p>
-      <p class="ml-2">〒880-0834 <br />宮崎県宮崎市新別府町前浜 <span>1401-224</span></p>
-    </div>
-    <div class="flex mt-[9px] text-[17px] leading-[40px]">
-      <div>座席数</div>
-      <div>:</div>
-      <div class="ml-2">約50席</div>
-    </div>
-    <div class="nav-button h-[47px] w-[132px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center transform transition duration-300 hover:scale-105 hover:shadow-lg">
-      <a href="<?php echo esc_url(home_url('/')); ?>infor">もっと見る →</a>
+  <div class="max-md:w-[70vw] responsible-boder-r">
+    <div class="mx-auto w-fit">
+      <div class="md:mt-[130px] text-[15px] leading-[20px]">ABOUT US</div>
+      <div class="min-[880px]:text-[85px] md:text-[60px] text-[50px] leading-[95px] md:mt-[30px] mt-[20px]">店舗情報</div>
+      <div class="flex mt-[9px] text-[17px] leading-[40px]">
+        <p class="whitespace-nowrap tracking-tight">住所</p>
+        <p class="ml-4">:</p>
+        <p class="ml-2">〒880-0834 <br />宮崎県宮崎市新別府町前浜 <span>1401-224</span></p>
+      </div>
+      <div class="flex mt-[9px] text-[17px] leading-[40px]">
+        <div>座席数</div>
+        <div>:</div>
+        <div class="ml-2">約50席</div>
+      </div>
+      <div class="nav-button h-[47px] w-[132px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center transform transition duration-300 hover:scale-105 hover:shadow-lg">
+        <a href="<?php echo esc_url(home_url('/')); ?>infor">もっと見る →</a>
+      </div>
     </div>
   </div>
   <div class="max-md:hidden overflow-hidden">
@@ -237,6 +305,7 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
       alt="StoreImage"
       class="w-[298px] h-[470px] object-cover rounded-t-full mx-auto transform transition duration-700 hover:scale-105"
     />
+    
   </div>
 </section>
 
@@ -250,6 +319,7 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
       alt="InsideStoreImage"
       class="w-[298px] h-[470px] object-cover rounded-t-full mx-auto transform transition duration-700 hover:scale-105"
     />
+    <div class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[30px] md:my-0"></div>
   </div>
   <div class="max-md:w-[70vw] max-md:mx-auto md:mt-[130px] md:ml-[4.51vw]">
     <div class="text-[15px] leading-[20px]">INSIDE</div>
@@ -271,6 +341,7 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
       alt="ContactImage"
       class="w-[298px] h-[470px] object-cover rounded-t-full mx-auto transform transition duration-700 hover:scale-105"
     />
+    <div class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[30px] md:my-0"></div>
   </div>
   <div class="max-md:w-[70vw] max-md:mx-auto md:ml-[4.51vw] responsible-boder-r">
     <div class="md:mt-[130px] text-[15px] leading-[20px]">CONTACT</div>

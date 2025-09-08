@@ -180,10 +180,11 @@
         </a>
 
         <a href="<?php echo esc_url(home_url('/')); ?>" class="flex justify-center items-center col-span-2 hover: cursor-pointer">
-          <p class="text-[20px] leading-[30px] text-center lg:text-[26px] lg:leading-[36px]">
+          <!-- <p class="text-[20px] leading-[30px] text-center lg:text-[26px] lg:leading-[36px]">
             森のビュッフェ <br />
             <span class="tracking-[20px]">SUN</span>
-          </p>
+          </p> -->
+          <img src="<?php echo T_DIRE_URI; ?>/assets/logo.png" alt="logo" class="w-1/4" />
         </a>
         
         <a href="<?php echo esc_url(home_url('/')); ?>infor" class="flex justify-center items-center">
