@@ -24,7 +24,9 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
 <div class="absolute w-full z-10 grid grid-cols-16">
   <div></div>
   <div class="col-span-14 text-center" data-aos="fade-down">
-    <div class="text-center text-[15px] lg:text-[20px] leading-[80px] lg:leading-[100px]">🌿</div>
+    <div class="w-[30px] h-[30px] mx-auto pt-20 pb-10">
+      <img src="<?php echo T_DIRE_URI; ?>/assets/logo-small.png" alt="logo-small">
+    </div>
     <div class="text-center text-[25px] sm:text-[40px] sm:leading-[60px] lg:text-[50px] lg:leading-[100px] leading-[50px] tracking-[20px] md:tracking-[30px] lg:tracking-[50px]">
       WLECOME
     </div>

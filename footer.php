@@ -3,9 +3,9 @@
       <!-- Footer -->
       <footer class="mx-[6vw] grid md:grid-cols-3 grid-cols-1">
         <div class="responsible-boder-r">
-          <img src="<?php echo T_DIRE_URI; ?>/assets/logo.png" alt="Logo" class="w-full h-[350px]" />
+          <img src="<?php echo T_DIRE_URI; ?>/assets/logo.png" alt="Logo" class="w-1/2 mx-auto h-auto mt-[90px] xl:mt-[50px] " />
 
-          <div class="grid grid-cols-8 ">
+          <div class="grid grid-cols-8 mt-[60px] xl:mt-[30px]">
             <div class="col-span-2"></div>
             <div
               class="flex justify-center cursor-pointer hover:scale-125 duration-300"
@@ -129,7 +129,7 @@
       </footer>
       <div class="border-b w-full my-[60px]"></div>
       <div class="mt-[20px] relative w-full justify-center flex">
-        <img src="<?php echo T_DIRE_URI; ?>/assets/lift.png" alt="lift" class="absolute bottom-0" />
+        <img src="<?php echo T_DIRE_URI; ?>/assets/logo.png" alt="lift" class="absolute bottom-5 w-[100px] h-[80px]" />
       </div>
       <section class="flex justify-center mb-[60px] text-[15px] leading-[25px]">
         2025森のビュッフェSUN.all rights reserved.
