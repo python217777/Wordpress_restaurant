@@ -126,9 +126,9 @@
     <?php wp_head(); ?>
     
   </head>
-  <body class="bg-white text-nature-color font-Mincho">
+  <body class="bg-[#f1f1f1] text-nature-color font-Mincho">
 
-      <div class="absolute z-51 top-0 h-full sticky">
+      <div class="absolute z-51 top-0 h-full sticky ">
         <div
           class="hidden md:block absolute z-51 ml-[6vw] h-screen border-r"
         ></div>
@@ -139,7 +139,7 @@
       <!-- Main Navigation -->
       <nav
         id="navbar1"
-        class="max-md:hidden md:block bg-white border-b sticky top-0 z-50 transition-opacity duration-500"
+        class="max-md:hidden md:block bg-[#f1f1f1] border-b sticky top-0 z-50 transition-opacity duration-500 bg-[#f1f1f1]"
       >
       
         <div>
@@ -206,7 +206,7 @@
         </div>
       </nav>
       <nav
-        class="md:hidden bg-white border-b sticky top-0 z-50 grid grid-cols-4 relative transition-opacity duration-500"
+        class="md:hidden bg-[#f1f1f1] border-b sticky top-0 z-50 grid grid-cols-4 relative transition-opacity duration-500"
         id="navbar2"
       >
         <!-- Left -->

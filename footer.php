@@ -3,9 +3,9 @@
       <!-- Footer -->
       <footer class="mx-[6vw] grid md:grid-cols-3 grid-cols-1">
         <div class="responsible-boder-r">
-          <img src="<?php echo T_DIRE_URI; ?>/assets/logo.png" alt="Logo" class="w-full h-[265px]" />
+          <img src="<?php echo T_DIRE_URI; ?>/assets/logo.png" alt="Logo" class="w-full h-[350px]" />
 
-          <div class="grid grid-cols-8 mt-[60px]">
+          <div class="grid grid-cols-8 ">
             <div class="col-span-2"></div>
             <div
               class="flex justify-center cursor-pointer hover:scale-125 duration-300"
