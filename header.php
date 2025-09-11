@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="<?php echo T_DIRE_URI; ?>/assets/logo-small.png" sizes="32x32" />
     <title>森のビュッフェ SUN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>

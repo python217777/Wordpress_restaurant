@@ -343,14 +343,16 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
     />
     <div class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[30px] md:my-0"></div>
   </div>
-  <div class="max-md:w-[70vw] max-md:mx-auto md:ml-[4.51vw] responsible-boder-r">
-    <div class="md:mt-[130px] text-[15px] leading-[20px]">CONTACT</div>
-    <div class="md:text-[45px] lg:text-[55px] leading-[65px] md:mt-[30px] mt-[20px] text-[40px] whitespace-nowrap tracking-tight">お問い合わせ</div>
-    <div class="flex mt-[9px] text-[17px] leading-[40px]"><p>電 話</p><p class="ml-3">:</p><p class="ml-2">0745-23-4567</p></div>
-    <div class="flex mt-[9px] text-[17px] leading-[40px]"><div>メール</div><div class="ml-3">:</div><div class="ml-2">example@test.com</div></div>
-    <button class="nav-button h-[47px] w-[130px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center whitespace-nowrap tracking-tight transform transition duration-300 hover:scale-105 hover:shadow-lg">
-      <a href="<?php echo esc_url(home_url('/')); ?>contact">お問い合わせ →</a>
-    </button>
+  <div class="max-md:w-[70vw] responsible-boder-r">
+    <div class="mx-auto w-fit">
+      <div class="md:mt-[130px] text-[15px] leading-[20px]">CONTACT</div>
+      <div class="md:text-[45px] lg:text-[55px] leading-[65px] md:mt-[30px] mt-[20px] text-[40px] whitespace-nowrap tracking-tight">お問い合わせ</div>
+      <div class="flex mt-[9px] text-[17px] leading-[40px]"><p>電 話</p><p class="ml-3">:</p><p class="ml-2">0745-23-4567</p></div>
+      <div class="flex mt-[9px] text-[17px] leading-[40px]"><div>メール</div><div class="ml-3">:</div><div class="ml-2">example@test.com</div></div>
+      <button class="nav-button h-[47px] w-[130px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center whitespace-nowrap tracking-tight transform transition duration-300 hover:scale-105 hover:shadow-lg">
+        <a href="<?php echo esc_url(home_url('/')); ?>contact">お問い合わせ →</a>
+      </button>
+    </div>
   </div>
   <div class="max-md:hidden overflow-hidden">
     <img

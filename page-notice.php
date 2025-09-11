@@ -27,7 +27,7 @@
         'post_type'      => 'blog',
         'post_status'    => 'publish',
         'paged'          => $current_page, // 実際のページ番号を使用
-        'posts_per_page' => 10,
+        'posts_per_page' => 5,
         'orderby'        => 'post_date',
         'order'          => 'DESC',
       ];
@@ -91,7 +91,7 @@
       // --- ページネーション処理 ---
       $max_pages = (int) $custom_query->max_num_pages;
 
-      if ( $max_pages > 1 ) :
+      if ( $max_pages >= 1 ) :
         // スライド式ページ範囲（最大5つ）
         if ( $current_page <= 3 ) {
           $left_limit  = 1;
@@ -111,7 +111,7 @@
       <!-- ページネーション部分（アニメーション付） -->
       <div class="flex justify-center mt-[70px] space-x-[5px]" id="PageButton">
         <!-- 最初のページへ -->
-        <?php if ( $current_page > 1 ): ?>
+        <?php if ( $current_page >= 1 ): ?>
           <a href="<?php echo esc_url( get_pagenum_link(1) ); ?>"
             class="w-[30px] h-[30px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[12px] rounded-md mx-[2px] hover:bg-[#665B09]/20 hover:scale-110 transform transition duration-300">&laquo;</a>
         <?php endif; ?>
@@ -148,7 +148,7 @@
         <?php endif; ?>
 
         <!-- 最後のページへ -->
-        <?php if ( $current_page < $max_pages ): ?>
+        <?php if ( $current_page <= $max_pages ): ?>
           <a href="<?php echo esc_url( get_pagenum_link($max_pages) ); ?>"
             class="w-[30px] h-[30px] border-[0.4px] border-[#665B09] flex justify-center items-center text-[12px] rounded-md mx-[2px] hover:bg-[#665B09]/20 hover:scale-110 transform transition duration-300">&raquo;</a>
         <?php endif; ?>
