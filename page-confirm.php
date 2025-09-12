@@ -1,5 +1,15 @@
 <?php
 /*
+Template Name: FrontPage
+*/
+if (!defined('ABSPATH')) exit;
+get_header();
+?>
+
+<style>
+
+<?php
+/*
 Template Name: Contact
 */
 if (!defined('ABSPATH')) exit;
@@ -8,7 +18,7 @@ get_header();
 <style>
   .mw_wp_form input {
     margin-top: 5px;
-    width: 46%;
+    width: 45%;
     height: 60px;
     font-size: 15px;
     padding: 10px 20px;
@@ -34,7 +44,7 @@ get_header();
 
    .mw_wp_form textarea {
     margin-top: 5px;
-    width: 95%;
+    width: 100%;
     height: 250px;
     font-size: 15px;
     padding: 10px 20px;
@@ -56,7 +66,7 @@ get_header();
 
 
 .mw_wp_form .confirm-btn {
-    width: 300px;
+    width: 200px;
     height: 50px;
     color: #fff;
     font-size: 15px;
@@ -84,6 +94,8 @@ get_header();
   }
 
 </style>
+</style>
+
 <?php echo do_shortcode( '[mwform_formkey key="71"]' ); ?>
 
 <?php get_footer(); ?>

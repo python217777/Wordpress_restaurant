@@ -66,21 +66,22 @@
               <?php endif; ?>
             </div>
 
-            <div class="hidden md:block md:col-span-5 text-[20px] leading-[40px]">
+            <div class="hidden md:block md:col-span-5 text-[20px] leading-[40px] whitespace-normal break-words">
               <?php echo esc_html($title); ?>
-              <div class="hidden md:block text-[15px] leading-[30px] mt-[20px]">
+              <div class="hidden md:block text-[15px] leading-[30px] mt-[20px] whitespace-normal break-words">
                 <?php echo $text; ?>
               </div>
             </div>
-          </div>
-
-          <!-- スマホ用 -->
-          <div class="md:hidden text-[20px] leading-[40px] mt-[10px]">
-            <?php echo esc_html($title); ?>
-            <div class="md:hidden text-[15px] leading-[30px] mt-[20px]">
-              <?php echo $text; ?>
             </div>
-          </div>
+
+            <!-- スマホ用 -->
+            <div class="md:hidden text-[20px] leading-[40px] mt-[10px] whitespace-normal break-words">
+              <?php echo esc_html($title); ?>
+              <div class="md:hidden text-[15px] leading-[30px] mt-[20px] whitespace-normal break-words">
+                <?php echo $text; ?>
+              </div>
+            </div>
+
 
           <div class="border-t w-full md:my-[50px] my-[40px]"></div>
         <?php endwhile; ?>

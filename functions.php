@@ -27,46 +27,46 @@ flush_rewrite_rules();
 add_action('wp_ajax_contact_form_submit', 'handle_contact_form_submit');
 add_action('wp_ajax_nopriv_contact_form_submit', 'handle_contact_form_submit');
 
-function handle_contact_form_submit() {
-    $name    = sanitize_text_field($_POST['name'] ?? '');
-    $phone   = sanitize_text_field($_POST['phone'] ?? '');
-    $email   = sanitize_email($_POST['email'] ?? '');
-    $message = sanitize_textarea_field($_POST['message'] ?? '');
+// function handle_contact_form_submit() {
+//     $name    = sanitize_text_field($_POST['name'] ?? '');
+//     $phone   = sanitize_text_field($_POST['phone'] ?? '');
+//     $email   = sanitize_email($_POST['email'] ?? '');
+//     $message = sanitize_textarea_field($_POST['message'] ?? '');
 
-    $errors = [];
+//     $errors = [];
 
-    if (empty($name) || strlen($name) < 2) {
-        $errors[] = "お名前を正しく入力してください。";
-    }
-    if (!preg_match('/^0\d{1,4}-\d{1,4}-\d{3,4}$/', $phone)) {
-        $errors[] = "電話番号の形式が正しくありません。例: 090-1234-5678";
-    }
-    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "有効なメールアドレスを入力してください。";
-    }
-    if (empty($message) || strlen($message) < 10) {
-        $errors[] = "お問い合わせ内容を10文字以上で入力してください。";
-    }
+//     if (empty($name) || strlen($name) < 2) {
+//         $errors[] = "お名前を正しく入力してください。";
+//     }
+//     if (!preg_match('/^0\d{1,4}-\d{1,4}-\d{3,4}$/', $phone)) {
+//         $errors[] = "電話番号の形式が正しくありません。例: 090-1234-5678";
+//     }
+//     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//         $errors[] = "有効なメールアドレスを入力してください。";
+//     }
+//     if (empty($message) || strlen($message) < 10) {
+//         $errors[] = "お問い合わせ内容を10文字以上で入力してください。";
+//     }
 
-    if (!empty($errors)) {
-        wp_send_json_error(['errors' => $errors]);
-    }
+//     if (!empty($errors)) {
+//         wp_send_json_error(['errors' => $errors]);
+//     }
 
-    $to      = "shinningstar202500@gmail.com";
-    $subject = "新しいお問い合わせが届きました";
-    $body    = "お名前: $name\n電話番号: $phone\nメール: $email\n\n--- お問い合わせ内容 ---\n$message";
-    $headers = [
-        "From: $name <$email>",
-        "Reply-To: $email",
-        "Content-Type: text/plain; charset=UTF-8"
-    ];
+//     $to      = "shinningstar202500@gmail.com";
+//     $subject = "新しいお問い合わせが届きました";
+//     $body    = "お名前: $name\n電話番号: $phone\nメール: $email\n\n--- お問い合わせ内容 ---\n$message";
+//     $headers = [
+//         "From: $name <$email>",
+//         "Reply-To: $email",
+//         "Content-Type: text/plain; charset=UTF-8"
+//     ];
 
-    if (wp_mail($to, $subject, $body, $headers)) {
-        wp_send_json_success(['message' => "✅ 送信が完了しました。ありがとうございました！"]);
-    } else {
-        wp_send_json_error(['errors' => ["❌ メール送信に失敗しました。もう一度お試しください。"]]);
-    }
-}
+//     if (wp_mail($to, $subject, $body, $headers)) {
+//         wp_send_json_success(['message' => "✅ 送信が完了しました。ありがとうございました！"]);
+//     } else {
+//         wp_send_json_error(['errors' => ["❌ メール送信に失敗しました。もう一度お試しください。"]]);
+//     }
+// }
 
 
 // 固定ページとMW WP Formでビジュアルモードを使用しない

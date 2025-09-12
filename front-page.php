@@ -280,7 +280,7 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
     />
     <div class="responsible-boder-b max-[768px]:w-[71.73vw] mx-auto my-[30px] md:my-0"></div>
   </div>
-  <div class="max-md:w-[70vw] responsible-boder-r">
+  <div class="max-md:w-[70vw] responsible-boder-r max-md:mx-auto">
     <div class="mx-auto w-fit">
       <div class="md:mt-[130px] text-[15px] leading-[20px]">ABOUT US</div>
       <div class="min-[880px]:text-[85px] md:text-[60px] text-[50px] leading-[95px] md:mt-[30px] mt-[20px]">店舗情報</div>
@@ -294,11 +294,12 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
         <div>:</div>
         <div class="ml-2">約50席</div>
       </div>
-      <div class="nav-button h-[47px] w-[132px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center transform transition duration-300 hover:scale-105 hover:shadow-lg">
+      <button class="nav-button h-[47px] w-[132px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center transform transition duration-300 hover:scale-105 hover:shadow-lg">
         <a href="<?php echo esc_url(home_url('/')); ?>infor">もっと見る →</a>
-      </div>
+      </button>
     </div>
   </div>
+  
   <div class="max-md:hidden overflow-hidden">
     <img
       src="<?php echo T_DIRE_URI; ?>/assets/TempImage/店舗情報.jpg"
