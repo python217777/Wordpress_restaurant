@@ -1,322 +1,54 @@
 <?php
-
 	/*
 	Template Name: FrontPage
 	*/
 
 	if ( ! defined( 'ABSPATH' ) ) exit;
 	get_header();
-
 ?>
-  <style>
-      * {
-        box-sizing: border-box;
-      }
+<div class="m-0 p-5 bg-[#85c343] font-['Hiragino_Kaku_Gothic_ProN','メイリオ','Helvetica_Neue',Arial,sans-serif] flex justify-center items-center min-h-screen">
+    <div class="reservation-widget w-full max-w-[400px] bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.15)] overflow-visible relative">
+      <div class="widget-header bg-[#85c343] text-white py-5 px-6 text-center text-lg font-semibold tracking-[0.5px]">
+        ウェブ予約
+      </div>
 
-      body {
-        margin: 0;
-        padding: 20px;
-        background-color: #85c343;
-        font-family: "Hiragino Kaku Gothic ProN", "メイリオ", "Helvetica Neue",
-          Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-      }
-
-      .reservation-widget {
-        width: 100%;
-        max-width: 400px;
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        overflow: visible;
-        position: relative;
-      }
-
-      .widget-header {
-        background: #85c343;
-        color: #ffffff;
-        padding: 20px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-      }
-
-      .widget-body {
-        padding: 24px;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-        position: relative;
-      }
-
-      .form-label {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 14px;
-        font-weight: 500;
-        color: #333;
-      }
-
-      .form-select,
-      .form-input {
-        width: 100%;
-        height: 48px;
-        border: 2px solid #e1e5e9;
-        border-radius: 12px;
-        padding: 0 16px;
-        font-size: 16px;
-        background: white;
-        transition: all 0.3s ease;
-        appearance: none;
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right 16px center;
-        background-size: 16px;
-      }
-
-      .form-select:focus,
-      .form-input:focus {
-        outline: none;
-        border-color: #85c343;
-        box-shadow: 0 0 0 4px rgba(133, 195, 67, 0.1);
-      }
-
-      .date-picker {
-        position: relative;
-        cursor: pointer;
-      }
-
-      .date-picker.disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-
-      .calendar-icon {
-        position: absolute;
-        right: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 20px;
-        height: 20px;
-        color: #666;
-        pointer-events: none;
-      }
-
-      .calendar {
-        position: fixed;
-        left: 50%;
-        transform: translateX(-50%);
-        top: 20%;
-        background: white;
-        border: 2px solid #e1e5e9;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        z-index: 1001;
-        display: none;
-        min-width: 300px;
-        max-width: 92vw;
-      }
-
-      .calendar.show {
-        display: block !important;
-        visibility: visible;
-        opacity: 1;
-      }
-
-      .calendar-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px;
-        border-bottom: 1px solid #e1e5e9;
-      }
-
-      .calendar-nav {
-        background: none;
-        border: none;
-        font-size: 18px;
-        color: #85c343;
-        cursor: pointer;
-        padding: 8px;
-        border-radius: 8px;
-        transition: background-color 0.2s;
-      }
-
-      .calendar-nav:hover {
-        background-color: #f0f7e8;
-      }
-
-      .calendar-nav:disabled {
-        color: #ccc;
-        cursor: not-allowed;
-      }
-
-      .calendar-title {
-        font-size: 16px;
-        font-weight: 600;
-        color: #333;
-      }
-
-      .calendar-body {
-        padding: 16px;
-      }
-
-      .calendar-weekdays {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
-        margin-bottom: 8px;
-      }
-
-      .calendar-weekday {
-        text-align: center;
-        font-size: 12px;
-        font-weight: 600;
-        color: #666;
-        padding: 8px 0;
-      }
-
-      .calendar-days {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
-      }
-
-      .calendar-day {
-        aspect-ratio: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: all 0.2s;
-        border: 2px solid transparent;
-      }
-
-      .calendar-day:hover {
-        background-color: #f0f7e8;
-        color: #85c343;
-      }
-
-      .calendar-day.selected {
-        background-color: #85c343;
-        color: white;
-      }
-
-      .calendar-day.disabled {
-        color: #ccc;
-        cursor: not-allowed;
-      }
-
-      .calendar-day.other-month {
-        color: #ccc;
-      }
-
-      .submit-button {
-        width: 100%;
-        height: 52px;
-        background: linear-gradient(135deg, #85c343 0%, #6ba832 100%);
-        color: white;
-        border: none;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-top: 8px;
-      }
-
-      .submit-button:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(133, 195, 67, 0.3);
-      }
-
-      .submit-button:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-        transform: none;
-        box-shadow: none;
-      }
-
-      .widget-footer {
-        text-align: center;
-        padding: 16px;
-        font-size: 12px;
-        color: #666;
-        opacity: 0.8;
-      }
-
-      .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-        display: none;
-      }
-
-      .overlay.show {
-        display: block;
-      }
-
-      @media (max-width: 480px) {
-        body {
-          padding: 10px;
-        }
-
-        .reservation-widget {
-          max-width: 100%;
-        }
-
-        .widget-body {
-          padding: 20px;
-        }
-      }
-    </style>
-  
-  <body>
-    <div class="reservation-widget">
-      <div class="widget-header">ウェブ予約</div>
-
-      <div class="widget-body">
+      <div class="widget-body p-6">
         <!-- Store Selection -->
-        <div class="form-group">
-          <label class="form-label">店舗</label>
-          <select class="form-select" id="storeSelect">
+        <div class="form-group mb-5 relative">
+          <label class="form-label block mb-2 text-sm font-medium text-[#333]">
+            店舗
+          </label>
+          <select class="form-select w-full h-12 border-2 border-[#e1e5e9] rounded-xl px-4 text-base bg-white transition-all duration-300 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6,9 12,15 18,9\'%3e%3c/polyline%3e%3c/svg%3e')] bg-no-repeat bg-[right_16px_center] bg-[length:16px] focus:outline-none focus:border-[#85c343] focus:ring-4 focus:ring-[#85c343]/10" id="storeSelect">
             <option value="">店舗を選択してください</option>
             <option value="sun-buffet">森のビュッフェ SUN</option>
           </select>
         </div>
 
         <!-- Party Size -->
-        <div class="form-group">
-          <label class="form-label">人数</label>
-          <select class="form-select" id="partySize" disabled>
+        <div class="form-group mb-5 relative">
+          <label class="form-label block mb-2 text-sm font-medium text-[#333]">
+            人数
+          </label>
+          <select class="form-select w-full h-12 border-2 border-[#e1e5e9] rounded-xl px-4 text-base bg-white transition-all duration-300 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6,9 12,15 18,9\'%3e%3c/polyline%3e%3c/svg%3e')] bg-no-repeat bg-[right_16px_center] bg-[length:16px] focus:outline-none focus:border-[#85c343] focus:ring-4 focus:ring-[#85c343]/10" id="partySize" disabled>
             <option value="">人数を選択してください</option>
           </select>
         </div>
 
         <!-- Date Selection -->
-        <div class="form-group">
-          <label class="form-label">お日にち</label>
-          <div class="date-picker" id="datePicker">
+        <div class="form-group mb-5 relative">
+          <label class="form-label block mb-2 text-sm font-medium text-[#333]">
+            お日にち
+          </label>
+          <div class="date-picker relative cursor-pointer" id="datePicker">
             <input
               type="text"
-              class="form-input"
+              class="form-input w-full h-12 border-2 border-[#e1e5e9] rounded-xl px-4 text-base bg-white transition-all duration-300 focus:outline-none focus:border-[#85c343] focus:ring-4 focus:ring-[#85c343]/10"
               id="dateInput"
               placeholder="日付を選択してください"
               readonly
             />
             <svg
-              class="calendar-icon"
+              class="calendar-icon absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#666] pointer-events-none"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -331,34 +63,36 @@
         </div>
 
         <!-- Calendar -->
-        <div class="calendar" id="calendar">
-          <div class="calendar-header">
-            <button class="calendar-nav" id="prevMonth">‹</button>
-            <div class="calendar-title" id="calendarTitle"></div>
-            <button class="calendar-nav" id="nextMonth">›</button>
+        <div class="calendar fixed left-1/2 -translate-x-1/2 top-[20%] bg-white border-2 border-[#e1e5e9] rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] z-[1001] hidden min-w-[300px] max-w-[92vw]" id="calendar">
+          <div class="calendar-header flex justify-between items-center p-4 border-b border-[#e1e5e9]">
+            <button class="calendar-nav bg-transparent border-none text-lg text-[#85c343] cursor-pointer p-2 rounded-lg hover:bg-[#f0f7e8] transition-colors duration-200 disabled:text-[#ccc] disabled:cursor-not-allowed" id="prevMonth">‹</button>
+            <div class="calendar-title text-base font-semibold text-[#333]" id="calendarTitle"></div>
+            <button class="calendar-nav bg-transparent border-none text-lg text-[#85c343] cursor-pointer p-2 rounded-lg hover:bg-[#f0f7e8] transition-colors duration-200 disabled:text-[#ccc] disabled:cursor-not-allowed" id="nextMonth">›</button>
           </div>
-          <div class="calendar-body">
-            <div class="calendar-weekdays">
-              <div class="calendar-weekday">日</div>
-              <div class="calendar-weekday">月</div>
-              <div class="calendar-weekday">火</div>
-              <div class="calendar-weekday">水</div>
-              <div class="calendar-weekday">木</div>
-              <div class="calendar-weekday">金</div>
-              <div class="calendar-weekday">土</div>
+          <div class="calendar-body p-4">
+            <div class="calendar-weekdays grid grid-cols-7 gap-1 mb-2">
+              <div class="calendar-weekday text-center text-xs font-semibold text-[#666] py-2">日</div>
+              <div class="calendar-weekday text-center text-xs font-semibold text-[#666] py-2">月</div>
+              <div class="calendar-weekday text-center text-xs font-semibold text-[#666] py-2">火</div>
+              <div class="calendar-weekday text-center text-xs font-semibold text-[#666] py-2">水</div>
+              <div class="calendar-weekday text-center text-xs font-semibold text-[#666] py-2">木</div>
+              <div class="calendar-weekday text-center text-xs font-semibold text-[#666] py-2">金</div>
+              <div class="calendar-weekday text-center text-xs font-semibold text-[#666] py-2">土</div>
             </div>
-            <div class="calendar-days" id="calendarDays"></div>
+            <div class="calendar-days grid grid-cols-7 gap-1" id="calendarDays"></div>
           </div>
         </div>
 
         <!-- Submit Button -->
-        <button class="submit-button" id="submitButton" disabled>次へ</button>
+        <button class="submit-button w-full h-[52px] bg-gradient-to-br from-[#85c343] to-[#6ba832] text-white border-none rounded-xl text-base font-semibold cursor-pointer transition-all duration-300 mt-2 hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(133,195,67,0.3)] disabled:bg-[#ccc] disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none" id="submitButton" disabled>次へ</button>
       </div>
 
-      <div class="widget-footer">powered by Toreta</div>
+      <div class="widget-footer text-center p-4 text-xs text-[#666] opacity-80">
+        powered by Toreta
+      </div>
     </div>
 
-    <div class="overlay" id="overlay"></div>
+    <div class="overlay fixed inset-0 bg-black/50 z-[999] hidden" id="overlay"></div>
 
     <script>
       class ReservationWidget {
@@ -367,7 +101,7 @@
           this.selectedDate = null;
           this.selectedStore = null;
           this.selectedPartySize = null;
-          this.reservableDays = 60; // From original code: reservableDays:60
+          this.reservableDays = 60;
 
           this.initializeElements();
           this.bindEvents();
@@ -389,34 +123,25 @@
         }
 
         bindEvents() {
-          this.storeSelect.addEventListener("change", () =>
-            this.onStoreChange()
-          );
-          this.partySizeSelect.addEventListener("change", () =>
-            this.onPartySizeChange()
-          );
-          this.datePicker.addEventListener("click", () =>
-            this.toggleCalendar()
-          );
+          this.storeSelect.addEventListener("change", () => this.onStoreChange());
+          this.partySizeSelect.addEventListener("change", () => this.onPartySizeChange());
+          this.datePicker.addEventListener("click", () => this.toggleCalendar());
           this.prevMonth.addEventListener("click", () => this.changeMonth(-1));
           this.nextMonth.addEventListener("click", () => this.changeMonth(1));
           this.overlay.addEventListener("click", () => this.hideCalendar());
-          this.submitButton.addEventListener("click", () =>
-            this.submitReservation()
-          );
+          this.submitButton.addEventListener("click", () => this.submitReservation());
         }
 
         onStoreChange() {
           this.selectedStore = this.storeSelect.value;
           if (this.selectedStore) {
             this.partySizeSelect.disabled = false;
-            this.datePicker.classList.remove("disabled");
+            this.datePicker.classList.remove("opacity-50", "cursor-not-allowed");
             this.updatePartySizeOptions();
           } else {
             this.partySizeSelect.disabled = true;
-            this.datePicker.classList.add("disabled");
-            this.partySizeSelect.innerHTML =
-              '<option value="">人数を選択してください</option>';
+            this.datePicker.classList.add("opacity-50", "cursor-not-allowed");
+            this.partySizeSelect.innerHTML = '<option value="">人数を選択してください</option>';
             this.hideCalendar();
           }
           this.updateSubmitButton();
@@ -429,16 +154,8 @@
 
         updatePartySizeOptions() {
           if (this.selectedStore) {
-            const options = [
-              "1名様",
-              "2名様",
-              "3名様",
-              "4名様",
-              "5名様",
-              "6名様",
-            ];
-            this.partySizeSelect.innerHTML =
-              '<option value="">人数を選択してください</option>';
+            const options = ["1名様", "2名様", "3名様", "4名様", "5名様", "6名様"];
+            this.partySizeSelect.innerHTML = '<option value="">人数を選択してください</option>';
             options.forEach((option, index) => {
               const optionElement = document.createElement("option");
               optionElement.value = index + 1;
@@ -450,7 +167,7 @@
 
         toggleCalendar() {
           console.log("Calendar toggle clicked");
-          if (this.datePicker.classList.contains("disabled")) {
+          if (this.datePicker.classList.contains("opacity-50")) {
             console.log("Date picker is disabled");
             return;
           }
@@ -465,30 +182,24 @@
         }
 
         showCalendar() {
-          this.calendar.classList.add("show");
-          this.overlay.classList.add("show");
+          this.calendar.classList.add("show", "!block", "visible", "opacity-100");
+          this.overlay.classList.add("show", "block");
           this.renderCalendar();
-          // Position calendar near the input, but keep within viewport
           const rect = this.datePicker.getBoundingClientRect();
-          const viewportHeight =
-            window.innerHeight || document.documentElement.clientHeight;
+          const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
           const preferredTop = rect.bottom + 8;
           const approxHeight = 380;
-          const finalTop =
-            preferredTop + approxHeight > viewportHeight
-              ? Math.max(16, rect.top - approxHeight - 8)
-              : preferredTop;
+          const finalTop = preferredTop + approxHeight > viewportHeight ? Math.max(16, rect.top - approxHeight - 8) : preferredTop;
           this.calendar.style.top = finalTop + "px";
         }
 
         hideCalendar() {
-          this.calendar.classList.remove("show");
-          this.overlay.classList.remove("show");
+          this.calendar.classList.remove("show", "!block", "visible", "opacity-100");
+          this.overlay.classList.remove("show", "block");
         }
 
         changeMonth(direction) {
           this.currentDate.setMonth(this.currentDate.getMonth() + direction);
-          // Ensure we don't go beyond reservable days
           const maxDate = new Date();
           maxDate.setDate(maxDate.getDate() + this.reservableDays);
           if (this.currentDate > maxDate) {
@@ -515,11 +226,11 @@
             date.setDate(startDate.getDate() + i);
 
             const dayElement = document.createElement("div");
-            dayElement.className = "calendar-day";
+            dayElement.className = "calendar-day aspect-square flex items-center justify-center rounded-lg cursor-pointer text-sm transition-all duration-200 border-2 border-transparent hover:bg-[#f0f7e8] hover:text-[#85c343]";
             dayElement.textContent = date.getDate();
 
             if (date.getMonth() !== month) {
-              dayElement.classList.add("other-month");
+              dayElement.classList.add("text-[#ccc]");
             }
 
             const today = new Date();
@@ -528,13 +239,13 @@
             maxDate.setDate(today.getDate() + this.reservableDays);
 
             if (date < today || date > maxDate) {
-              dayElement.classList.add("disabled");
+              dayElement.classList.add("text-[#ccc]", "cursor-not-allowed");
             } else {
               dayElement.addEventListener("click", () => this.selectDate(date));
             }
 
             if (this.selectedDate && this.isSameDate(date, this.selectedDate)) {
-              dayElement.classList.add("selected");
+              dayElement.classList.add("bg-[#85c343]", "text-white");
             }
 
             this.calendarDays.appendChild(dayElement);
@@ -557,9 +268,7 @@
         }
 
         formatDate(date) {
-          return `${date.getFullYear()}年${
-            date.getMonth() + 1
-          }月${date.getDate()}日`;
+          return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
         }
 
         formatDateForURL(date) {
@@ -570,8 +279,7 @@
         }
 
         updateSubmitButton() {
-          const canSubmit =
-            this.selectedStore && this.selectedPartySize && this.selectedDate;
+          const canSubmit = this.selectedStore && this.selectedPartySize && this.selectedDate;
           this.submitButton.disabled = !canSubmit;
         }
 
@@ -582,23 +290,16 @@
           const partySize = this.selectedPartySize;
           const date = this.formatDateForURL(this.selectedDate);
 
-          // Construct the Toreta reservation URL
-          const reservationUrl = `https://yoyaku.toreta.in/${encodeURIComponent(
-            storeId
-          )}?date=${encodeURIComponent(date)}&seats=${encodeURIComponent(
-            partySize
-          )}`;
+          const reservationUrl = `https://yoyaku.toreta.in/${encodeURIComponent(storeId)}?date=${encodeURIComponent(date)}&seats=${encodeURIComponent(partySize)}`;
 
-          // Redirect to the Toreta reservation page
           window.location.href = reservationUrl;
         }
       }
 
-      // Initialize the widget when the page loads
       document.addEventListener("DOMContentLoaded", () => {
         new ReservationWidget();
       });
     </script>
-  </body>
+</div>
 
 <?php get_footer(); ?>
