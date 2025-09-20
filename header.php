@@ -170,7 +170,7 @@
             </p>
         </a>
         
-        <a href="https://toreta.in" target="_blank" class="flex justify-center items-center">
+        <a href="<?php echo esc_url(home_url('/')); ?>reservaton" class="flex justify-center items-center">
             <p class="m-[3px] whitespace-nowrap tracking-tight nav-button w-fit">
               ご予約
             </p>
@@ -217,7 +217,7 @@
         <div
           class="flex items-center justify-center border-r"
         >
-          <a href="https://toreta.in" target="_blank" class="nav-button text-[12px]">
+          <a href="<?php echo esc_url(home_url('/')); ?>reservaton" target="_blank" class="nav-button text-[12px]">
             <p class="p-[3px] flex justify-center items-center">
               ご予約
             </p>

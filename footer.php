@@ -99,7 +99,7 @@
               </a>
             </div>
             <div>
-              <a href="https://toreta.in" target = "_blank" class="footer-button">
+              <a href="<?php echo esc_url(home_url('/')); ?>reservaton" target = "_blank" class="footer-button">
                 ご予約
               </a>
             </div> 

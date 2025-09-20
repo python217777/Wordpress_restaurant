@@ -191,7 +191,7 @@ $blog_category_id = get_query_var('blog_category_id') ? get_query_var('blog_cate
     <div class="md:text-[85px] text-[50px] leading-[90px] md:mt-[30px] mt-[20px]">ご予約</div>
     <div class="text-[17px] leading-[25px] md:mt-[60px] mt-[40px]">24時間TORETAでご予約いただけます。</div>
     <div class="nav-button h-[47px] w-[120px] text-[15px] leading-[25px] md:mt-[60px] mt-[40px] flex items-center transform transition duration-300 hover:scale-105 hover:shadow-lg">
-      <a href="https://toreta.in">予約する →</a>
+      <a href="<?php echo esc_url(home_url('/')); ?>reservaton">予約する →</a>
     </div>
   </div>
 </section>
